@@ -1,4 +1,7 @@
-import { Session } from "@remix-run/node";
+import { ActionFunction, json, LoaderFunction, redirect, Session } from "@remix-run/node";
+import { refreshAccessToken } from "./refresh-token";
+import { commitSession, getSession } from "./session";
+
 
 async function authenticate(
   request: Request,
@@ -23,7 +26,7 @@ async function authenticate(
     // here, check if the error is an AuthorizationError (the one we throw above)
     if (error instanceof AuthorizationError) {
       // refresh the token somehow, this depends on the API you are using
-      let { accessToken, refreshToken, expirationDate } = await refreshToken(
+      let { accessToken, refreshToken, expirationDate } = await refreshAccessToken(
         session.get("refreshToken")
       );
 
@@ -57,3 +60,28 @@ export let loader: LoaderFunction = async ({ request }) => {
   // and return the response
   return json(data);
 };
+
+
+
+export let action: ActionFunction = async ({ request }) => {
+  // also read the session
+  let session = await getSession(request);
+  // but create a headers object
+  let headers = new Headers();
+  // authenticate the request and get the accessToken back, this will be the
+  // already saved token or the refreshed one, in that case the headers above
+  // will have the Set-Cookie header appended
+  let accessToken = await authenticate(request, session, headers);
+  // do something with the token
+  const dashboardUrl = `${API_BASE_URL}/admin/dashboard`;
+
+  let data = await getSomeData(accessToken);
+  // and return the response passing the headers so we update the cookie
+  return json(data, { headers });
+};
+
+const fetchDasboard = {
+
+}
+
+export let API_BASE_URL = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/${process.env.NEXT_PUBLIC_API_VERSION}`;
