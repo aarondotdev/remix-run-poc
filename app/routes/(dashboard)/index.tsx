@@ -1,8 +1,12 @@
 import React from 'react'
+import Layout from './layout'
 
 function dashboard() {
     return (
-        <div>dashboard</div>
+        <Layout>
+
+            <div>test</div>
+        </Layout>
     )
 }
 

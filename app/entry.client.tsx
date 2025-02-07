@@ -12,6 +12,7 @@ import { hydrateRoot } from "react-dom/client";
 import { I18nextProvider, initReactI18next } from "react-i18next";
 import { defaultNS, fallbackLng, supportedLngs } from "./config/i18n";
 import { getInitialNamespaces } from "remix-i18next/client";
+import { SidebarProvider } from "./components/ui/sidebar";
 
 async function main() {
   // eslint-disable-next-line import/no-named-as-default-member
@@ -42,11 +43,13 @@ async function main() {
   startTransition(() => {
     hydrateRoot(
       document,
-      <I18nextProvider i18n={i18next}>
-        <StrictMode>
-          <RemixBrowser />
-        </StrictMode>
-      </I18nextProvider>
+      <SidebarProvider>
+        <I18nextProvider i18n={i18next}>
+          <StrictMode>
+            <RemixBrowser />
+          </StrictMode>
+        </I18nextProvider>
+      </SidebarProvider>
     );
   });
 }

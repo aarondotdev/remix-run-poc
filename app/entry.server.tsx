@@ -15,6 +15,7 @@ import { createInstance, i18n as i18next } from "i18next";
 import i18nServer from "./modules/i18n.server";
 import { I18nextProvider, initReactI18next } from "react-i18next";
 import * as i18n from "./config/i18n";
+import { SidebarProvider } from "./components/ui/sidebar";
 
 
 
@@ -121,13 +122,15 @@ function handleBrowserRequest(
   return new Promise((resolve, reject) => {
     let shellRendered = false;
     const { pipe, abort } = renderToPipeableStream(
-      <I18nextProvider i18n={i18next}>
-        <RemixServer
-          context={remixContext}
-          url={request.url}
-          abortDelay={ABORT_DELAY}
-        />
-      </I18nextProvider>
+      <SidebarProvider>
+        <I18nextProvider i18n={i18next}>
+          <RemixServer
+            context={remixContext}
+            url={request.url}
+            abortDelay={ABORT_DELAY}
+          />
+        </I18nextProvider>
+      </SidebarProvider>
       ,
       {
         onShellReady() {

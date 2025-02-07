@@ -80,8 +80,4 @@ export let action: ActionFunction = async ({ request }) => {
   return json(data, { headers });
 };
 
-const fetchDasboard = {
-
-}
-
 export let API_BASE_URL = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/${process.env.NEXT_PUBLIC_API_VERSION}`;
