@@ -4,10 +4,10 @@ import { Button } from "~/components/ui/button";
 import { authenticator } from "~/services/auth";
 
 
-// export let action: ActionFunction = async ({ request }) => {
-//     let user = await authenticator.authenticate("cage-oauth", request);
-//     if (user) return redirect("/dashboard");
-// };
+export let action: ActionFunction = async ({ request }) => {
+    let user = await authenticator.authenticate("cage-oauth", request);
+    if (user) return redirect("/dashboard");
+};
 
 function login() {
     return (

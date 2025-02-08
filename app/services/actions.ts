@@ -3,7 +3,7 @@ import { refreshAccessToken } from "./refresh-token";
 import { commitSession, getSession } from "./session";
 
 
-async function authenticate(
+export async function authenticate(
   request: Request,
   session: Session,
   headers = new Headers()
