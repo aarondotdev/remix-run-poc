@@ -13,10 +13,10 @@ import {
     useSidebar
 } from '~/components/ui/sidebar';
 import { Link } from '@remix-run/react';
+import { Separator } from '~/components/ui/separator';
 import { NavMain } from './nav-main';
 import { navItems } from './nav-items';
-import { Separator } from '~/components/ui/separator';
-
+import { UserNav } from './user-nav';
 
 export function AppSidebar({ children }: { children: React.ReactNode }) {
     return (
@@ -62,10 +62,7 @@ export function AppSidebar({ children }: { children: React.ReactNode }) {
                     </div>
 
                     <div className="flex items-center gap-1 px-4">
-                        {/* <NotificationToggle /> */}
-                        {/* <UserNav />
-                        <ThemeToggle />
-                        <LocaleSwitcher /> */}
+                        <UserNav />
                     </div>
                 </header>
                 {children}

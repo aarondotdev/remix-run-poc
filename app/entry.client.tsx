@@ -43,13 +43,11 @@ async function main() {
   startTransition(() => {
     hydrateRoot(
       document,
-      <SidebarProvider>
-        <I18nextProvider i18n={i18next}>
-          <StrictMode>
-            <RemixBrowser />
-          </StrictMode>
-        </I18nextProvider>
-      </SidebarProvider>
+      <I18nextProvider i18n={i18next}>
+        <StrictMode>
+          <RemixBrowser />
+        </StrictMode>
+      </I18nextProvider>
     );
   });
 }

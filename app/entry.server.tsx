@@ -69,12 +69,15 @@ function handleBotRequest(
     let shellRendered = false;
     const { pipe, abort } = renderToPipeableStream(
       <I18nextProvider i18n={i18next}>
-
-        <RemixServer
-          context={remixContext}
-          url={request.url}
-          abortDelay={ABORT_DELAY}
-        /> </I18nextProvider>,
+        <SidebarProvider>
+          <RemixServer
+            context={remixContext}
+            url={request.url}
+            abortDelay={ABORT_DELAY}
+          />
+        </SidebarProvider>
+      </I18nextProvider>
+      ,
       {
         onAllReady() {
           shellRendered = true;
@@ -122,15 +125,15 @@ function handleBrowserRequest(
   return new Promise((resolve, reject) => {
     let shellRendered = false;
     const { pipe, abort } = renderToPipeableStream(
-      <SidebarProvider>
-        <I18nextProvider i18n={i18next}>
+      <I18nextProvider i18n={i18next}>
+        <SidebarProvider>
           <RemixServer
             context={remixContext}
             url={request.url}
             abortDelay={ABORT_DELAY}
           />
-        </I18nextProvider>
-      </SidebarProvider>
+        </SidebarProvider>
+      </I18nextProvider>
       ,
       {
         onShellReady() {
