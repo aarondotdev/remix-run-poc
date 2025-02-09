@@ -17,8 +17,14 @@ import { Separator } from '~/components/ui/separator';
 import { NavMain } from './nav-main';
 import { navItems } from './nav-items';
 import { UserNav } from './user-nav';
+import { cn } from '~/lib/utils';
+import BetrnkLogoMini from "~/assets/logo/betrnk-logo-mini.png"
+import BetrnkTextLogoLight from '~/assets/logo/betrnk-logo-text-white.png';
+import BetrnkTextLogoDark from "~/assets/logo/betrnk-logo-text-black.png"
 
 export function AppSidebar({ children }: { children: React.ReactNode }) {
+    const { open } = useSidebar()
+
     return (
         <React.Fragment>
             <Sidebar
@@ -26,23 +32,29 @@ export function AppSidebar({ children }: { children: React.ReactNode }) {
             >
                 <SidebarHeader>
                     <div className="hidden md:block">
-                        <Link to="/" className="flex items-start gap-x-2">
-                            {/* <Image
+                        <Link to="/dashboard" className="flex items-start gap-x-2">
+                            <img
                                 src={BetrnkLogoMini}
                                 alt="Betrnk logo"
                                 width={50}
                                 height={50}
                                 className="h-auto w-[30px]"
                             />
+
                             {open && (
-                                <Image
-                                    src={BetrnkTextLogoLight}
-                                    alt="Betrnk logo"
-                                    width={150}
-                                    height={150}
-                                    className={cn('h-auto w-[80px]')}
-                                />
-                            )} */}
+                                <>
+                                    <img
+                                        src={BetrnkTextLogoLight}
+                                        alt="Betrnk logo"
+                                        className={cn('h-auto w-[80px] dark:block hidden')}
+                                    />
+                                    <img
+                                        src={BetrnkTextLogoDark}
+                                        alt="Betrnk logo"
+                                        className={cn("h-auto w-[80px] dark:hidden block")}
+                                    />
+                                </>
+                            )}
                         </Link>
                     </div>
                 </SidebarHeader>
