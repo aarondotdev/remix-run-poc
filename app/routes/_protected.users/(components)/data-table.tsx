@@ -10,14 +10,14 @@ import {
 } from '@tanstack/react-table';
 import React, { useTransition } from 'react';
 
-import { Button } from '@/components/ui/button';
+import { Button } from '~/components/ui/button';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue
-} from '@/components/ui/select';
+} from '~/components/ui/select';
 import {
   Table,
   TableBody,
@@ -25,16 +25,15 @@ import {
   TableHead,
   TableHeader,
   TableRow
-} from '@/components/ui/table';
+} from '~/components/ui/table';
 import {
   DoubleArrowLeftIcon,
   DoubleArrowRightIcon
 } from '@radix-ui/react-icons';
 import { ChevronLeftIcon, ChevronRightIcon, LoaderIcon } from 'lucide-react';
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+import { ScrollArea, ScrollBar } from '~/components/ui/scroll-area';
 import { useQueryState, parseAsInteger } from 'nuqs';
 import TableToolBar from './table-toolbar';
-import { useTranslations } from 'next-intl';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -62,8 +61,6 @@ export function DataTable<TData, TValue>({
       .withDefault(15)
   );
 
-  const [isPending, startTransition] = useTransition();
-
   const paginationState = React.useMemo(
     () => ({
       pageIndex: pageNumber - 1,
@@ -82,11 +79,9 @@ export function DataTable<TData, TValue>({
         typeof updaterOrValue === 'function'
           ? updaterOrValue(paginationState)
           : updaterOrValue;
+      setPageNumber(pagination.pageIndex + 1);
+      setPageSize(pagination.pageSize);
 
-      startTransition(() => {
-        setPageNumber(pagination.pageIndex + 1);
-        setPageSize(pagination.pageSize);
-      });
     },
     [paginationState, setPageNumber, setPageSize]
   );
@@ -113,7 +108,6 @@ export function DataTable<TData, TValue>({
     }
   });
 
-  const t = useTranslations('Translation');
 
   return (
     <>
@@ -132,9 +126,9 @@ export function DataTable<TData, TValue>({
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                     </TableHead>
                   );
                 })}
@@ -142,17 +136,7 @@ export function DataTable<TData, TValue>({
             ))}
           </TableHeader>
           <TableBody>
-            {isPending ? (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  rowSpan={pageNumber}
-                  className="items-center justify-center text-center"
-                >
-                  <LoaderIcon className="mx-auto block animate-spin repeat-infinite" />
-                </TableCell>
-              </TableRow>
-            ) : table.getRowModel().rows?.length ? (
+            {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
@@ -177,7 +161,7 @@ export function DataTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  {t('label_no_results')}
+                  No of results
                 </TableCell>
               </TableRow>
             )}
@@ -195,14 +179,12 @@ export function DataTable<TData, TValue>({
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:gap-6 lg:gap-8">
             <div className="flex items-center space-x-2">
               <p className="whitespace-nowrap text-sm font-medium">
-                {t('label_rows_per_page')}
+                Rows per page
               </p>
               <Select
                 value={`${table.getState().pagination.pageSize}`}
                 onValueChange={(value) => {
-                  startTransition(() => {
-                    table.setPageSize(Number(value));
-                  });
+                  table.setPageSize(Number(value));
                 }}
               >
                 <SelectTrigger className="h-8 w-[70px]">

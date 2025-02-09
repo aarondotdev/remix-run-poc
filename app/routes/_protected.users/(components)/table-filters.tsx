@@ -1,37 +1,33 @@
-'use client';
-
-import { searchParams } from '@/lib/search-params';
 import { useQueryState } from 'nuqs';
 import { useCallback, useMemo } from 'react';
-
-// export const GENDER_OPTIONS = [
-//   { value: 'male', label: 'Male' },
-//   { value: 'female', label: 'Female' }
-// ];
+import { useSearchParams } from '@remix-run/react';
 
 export function useTableFilter() {
-  const [searchQuery, setSearchQuery] = useQueryState(
-    'filter[q]',
-    searchParams['filter[q]']
-      .withOptions({ shallow: false, history: 'push' })
-      .withDefault('')
-  );
+  const [searchParams, setSearchParams] = useSearchParams()
 
-  //   const [genderFilter, setGenderFilter] = useQueryState(
-  //     'gender',
-  //     searchParams.gender.withOptions({ shallow: false }).withDefault('')
-  //   );
+  const searchQuery = searchParams.get("filter[q]")
+  const pageNumber = searchParams.get("page[number]")
+  const params = new URLSearchParams();
 
-  const [page, setPage] = useQueryState(
-    'page[number]',
-    searchParams['page[number]'].withDefault(1)
-  );
+  const setPageNumber = (value: string) => {
+    setSearchParams(params, {
+      preventScrollReset: true,
+    });
+    params.set("page[number]", value);
+  }
+
+  const setSearchQuery = (value: string) => {
+    params.set("filter[q]", value);
+    setSearchParams(params, {
+      preventScrollReset: true,
+    });
+
+  }
 
   const resetFilters = useCallback(() => {
-    setSearchQuery(null);
-
-    setPage(1);
-  }, [setSearchQuery, setPage]);
+    setPageNumber("")
+    setSearchQuery("")
+  }, [searchQuery, pageNumber]);
 
   const isAnyFilterActive = useMemo(() => {
     return !!searchQuery;
@@ -40,8 +36,8 @@ export function useTableFilter() {
   return {
     searchQuery,
     setSearchQuery,
-    page,
-    setPage,
+    pageNumber,
+    setPageNumber,
     resetFilters,
     isAnyFilterActive
   };

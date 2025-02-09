@@ -3,9 +3,8 @@ import { AppSidebar } from '../components/shared/app-sidebar'
 import { Outlet, useLoaderData } from '@remix-run/react'
 import { SidebarProvider } from '~/components/ui/sidebar'
 import { json, LoaderFunction, redirect } from '@remix-run/node';
-import { authenticator, getPermissions, getUser } from '~/services/auth';
+import { getPermissions, getUser } from '~/services/auth';
 import { getSession } from '~/services/session';
-import { authenticate } from '~/services/actions';
 import { NuqsAdapter } from 'nuqs/adapters/remix'
 import UserProvider from '~/context/user-provider';
 
@@ -24,9 +23,9 @@ export const loader: LoaderFunction = async ({ request }) => {
     return json({ data });
 };
 
-
 function layout() {
     const { data } = useLoaderData<typeof loader>()
+
     return (
         <NuqsAdapter>
             <UserProvider data={data} >

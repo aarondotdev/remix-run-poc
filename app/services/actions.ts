@@ -16,7 +16,7 @@ export async function authenticate(
     if (!accessToken) throw redirect("/login");
 
     // if expired throw an error (we can extends Error to create this)
-    if (new Date(session.get("expirationDate")) < new Date()) {
+    if (new Date(session.get("accessTokenExpires")) < new Date()) {
       throw new AuthorizationError("Expired");
     }
 
@@ -26,14 +26,14 @@ export async function authenticate(
     // here, check if the error is an AuthorizationError (the one we throw above)
     if (error instanceof AuthorizationError) {
       // refresh the token somehow, this depends on the API you are using
-      let { accessToken, refreshToken, expirationDate } = await refreshAccessToken(
+      let { accessToken, refreshToken, accessTokenExpires } = await refreshAccessToken(
         session.get("refreshToken")
       );
 
       // update the session with the new values
       session.set("accessToken", accessToken);
       session.set("refreshToken", refreshToken);
-      session.set("expirationDate", expirationDate);
+      session.set("accessTokenExpires", accessTokenExpires);
 
       // commit the session and append the Set-Cookie header
       headers.append("Set-Cookie", await commitSession(session));

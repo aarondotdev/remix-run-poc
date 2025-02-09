@@ -1,6 +1,7 @@
 import { json, LoaderFunction, redirect } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import React from 'react'
+import { useUserContext } from '~/context/user-provider';
 import { getSession } from '~/services/session';
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -16,8 +17,10 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 
 function dashboard() {
-    const { data } = useLoaderData<typeof loader>();
-    return <></>;
+    const { data: user } = useLoaderData<typeof loader>();
+    const data = useUserContext()
+
+    return <pre>{JSON.stringify(data, null, 2)}</pre>;
 }
 
 export default dashboard

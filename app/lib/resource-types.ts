@@ -133,15 +133,11 @@ export type SessionType = {
 };
 
 export type GetRequestConfigType = {
-    filter(arg0: (option: any) => boolean): unknown;
     method: string;
     headers: {
         Accept: string;
         'Content-type': string;
         Authorization: string;
-        next?: {
-            revalidate: number;
-        };
     };
 };
 

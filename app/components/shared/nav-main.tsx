@@ -29,6 +29,7 @@ import { Fragment } from 'react';
 
 import { cn } from '~/lib/utils';
 import { Link, useLocation } from '@remix-run/react';
+import { NavGroup } from '~/lib/resource-types';
 
 export function NavMain({ navItems }: { navItems: NavGroup[] | null }) {
     const location = useLocation();

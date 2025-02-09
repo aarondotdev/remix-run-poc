@@ -1,28 +1,23 @@
-'use client';
-import React from 'react';
-import { DataTableSearch } from '@/components/ui/table/search';
-import { useUserContext } from '@/contexts/user-context';
+import { DataTableSearch } from '~/components/ui/data-table/search';
 import { useTableFilter } from './table-filters';
-import { Button } from '@/components/ui/button';
+import { Button } from '~/components/ui/button';
 import { Plus } from 'lucide-react';
 import UserSheet from './user-sheet';
-import { Role } from '@/types';
-import useUserStore from '@/stores/user-store';
-import { useFetchPermissions } from '@/stores/permission-store';
+import useUserStore from '~/stores/user-store';
 import { Table } from '@tanstack/react-table';
-import { DataTableViewOptions } from '@/components/ui/table/data-table-view-options';
-import { ActionModal } from './actions-modal';
+import { DataTableViewOptions } from '~/components/ui/data-table/data-table-view-options';
+import { useUserContext } from '~/context/user-provider';
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
 }
 
 function TableToolBar<TData>({ table }: DataTableToolbarProps<TData>) {
-  // const { sheetActions, setSheetActions } = useUserContext();
   const sheetActions = useUserStore((state) => state.sheetActions);
   const setSheetActions = useUserStore((state) => state.setSheetActions);
-  const { permissions } = useFetchPermissions();
-  const hasPermissionToCreate = permissions?.data?.includes('CREATE_USER');
+  const data = useUserContext()
+
+  const hasPermissionToCreate = data?.permissions?.includes('user.create');
 
   const handleAdd = () => {
     setSheetActions({ action: 'add', open: true });
@@ -32,8 +27,8 @@ function TableToolBar<TData>({ table }: DataTableToolbarProps<TData>) {
     isAnyFilterActive,
     resetFilters,
     searchQuery,
-    setPage,
-    setSearchQuery
+    setSearchQuery,
+    setPageNumber
   } = useTableFilter();
   return (
     <div className="flex w-full justify-between gap-x-2">
@@ -41,7 +36,7 @@ function TableToolBar<TData>({ table }: DataTableToolbarProps<TData>) {
         searchKey="name"
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
-        setPage={setPage}
+        setPage={setPageNumber}
       />
       {/* <DataTableFilterBox
         filterKey="gender"
@@ -60,9 +55,9 @@ function TableToolBar<TData>({ table }: DataTableToolbarProps<TData>) {
           <Plus className="mr-2 h-4 w-4" /> Add New
         </Button>
       )}
-
       <UserSheet />
-      <ActionModal />
+      {/*
+      <ActionModal /> */}
     </div>
   );
 }

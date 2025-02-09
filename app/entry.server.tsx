@@ -15,7 +15,6 @@ import { createInstance, i18n as i18next } from "i18next";
 import i18nServer from "./modules/i18n.server";
 import { I18nextProvider, initReactI18next } from "react-i18next";
 import * as i18n from "./config/i18n";
-import { SidebarProvider } from "./components/ui/sidebar";
 
 
 

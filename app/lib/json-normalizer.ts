@@ -1,11 +1,13 @@
-import {
+import lodash from "lodash"
+
+const {
   isArray,
   isEmpty,
   isNil,
   find,
   isPlainObject,
   camelCase
-} from 'lodash';
+} = lodash
 
 interface JsonApiResource {
   id: string;
