@@ -1,11 +1,10 @@
 import { Authenticator } from "remix-auth";
 import { OAuth2Strategy, CodeChallengeMethod } from "remix-auth-oauth2";
 import { API_BASE_URL } from "./actions";
-import { json } from "@remix-run/node";
+import { json, SessionData } from "@remix-run/node";
+import { User } from "./session";
 
-interface User {
-  name: string
-}
+
 
 export const authenticator = new Authenticator<User>();
 
@@ -17,9 +16,9 @@ authenticator.use(
         maxAge: 60 * 60 * 24 * 7, // 1 week
         httpOnly: true,
         sameSite: "Lax",
-        secure: process.env.NODE_ENV === "production" ? true : false,
+        secure: process.env.NODE_ENV === "production" as any,
       }, // Optional, can also be an object with more options
-      clientId: process.env.NEXT_PUBLIC_CLIENT_ID,
+      clientId: process.env.NEXT_PUBLIC_CLIENT_ID!,
       //   clientSecret: CLIENT_SECRET,
 
       authorizationEndpoint: `${process.env.NEXT_PUBLIC_BACKEND_URL}/oauth/authorize/?prompt=login`,
@@ -35,20 +34,18 @@ authenticator.use(
       const { data } = tokens
       // here you can use the params above to get the user and return it
       // what you do inside this and how you find the user is up to you
-      const res = await getUser(data, request)
-      console.log("profile", res)
+      const res = await getUser(data)
 
-      const user = await res.json()
-
-      return {
-        ...user,
-        ...tokens
+      const user = {
+        id: res.id,
+        name: res.name,
+        email: res.email
       }
 
-      // return {
-      //   ...tokens,
-      //   res
-      // }
+      return {
+        ...tokens,
+        ...user
+      }
 
     }
   ),
@@ -58,14 +55,14 @@ authenticator.use(
 );
 
 
-export let getUser = async (tokens, request) => {
+export let getUser = async (tokens: SessionData) => {
   const res = await fetch(`${API_BASE_URL}/user`, {
     headers: {
       Accept: 'application/json',
       'Content-type': 'application/json',
-      Authorization: `Bearer ${tokens.accessToken}`
+      Authorization: `Bearer ${tokens.access_token}`
     }
   })
 
-  return json(res)
+  return await res.json()
 }

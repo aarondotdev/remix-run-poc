@@ -1,5 +1,5 @@
 'use client';
-import { Link } from '@remix-run/react';
+import { Form, Link } from '@remix-run/react';
 import { useState } from 'react';
 import { Button } from '~/components/ui/button';
 import {
@@ -12,6 +12,8 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger
 } from '~/components/ui/dropdown-menu';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { UserIcon } from 'lucide-react';
 
 export function UserNav() {
 
@@ -37,11 +39,12 @@ export function UserNav() {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+            User Nav
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56" align="end" forceMount>
           <DropdownMenuLabel className="font-normal">
-            asdasd
+
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
@@ -62,9 +65,12 @@ export function UserNav() {
 
           <DropdownMenuSeparator />
 
-          <DropdownMenuItem onClick={handleSignOut}>
-            Log out
-            <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+          <DropdownMenuItem asChild>
+            <Form method="post" action="/auth/logout">
+              <button type="submit" className="px-3 py-1 bg-red-500 text-white rounded">
+                Logout
+              </button>
+            </Form>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
