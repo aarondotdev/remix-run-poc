@@ -13,11 +13,13 @@ import { I18nextProvider, initReactI18next } from "react-i18next";
 import { defaultNS, fallbackLng, supportedLngs } from "./config/i18n";
 import { getInitialNamespaces } from "remix-i18next/client";
 import { SidebarProvider } from "./components/ui/sidebar";
+import Fetch from "i18next-fetch-backend"
 
 async function main() {
   // eslint-disable-next-line import/no-named-as-default-member
   await i18next
     .use(initReactI18next) // Tell i18next to use the react-i18next plugin
+    .use(Fetch) // Tell i18next to use the Fetch backend
     .use(I18nextBrowserLanguageDetector) // Setup a client-side language detector
     .init({
       defaultNS,
@@ -39,6 +41,7 @@ async function main() {
         loadPath: "/api/locales?lng={{lng}}&ns={{ns}}",
       },
     });
+
 
   startTransition(() => {
     hydrateRoot(

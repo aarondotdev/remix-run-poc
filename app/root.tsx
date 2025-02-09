@@ -12,10 +12,7 @@ import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
 import i18nServer, { localeCookie } from "./modules/i18n.server";
 import { useChangeLanguage } from "remix-i18next/react";
 import styles from "./tailwind.css?url"
-
 export const handle = { i18n: ["translation"] };
-
-import "./tailwind.css";
 
 export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
