@@ -2,7 +2,7 @@
 import { type FC } from 'react';
 
 // Types
-import { Badge } from '@/components/ui/badge';
+import { Badge } from '~/components/ui/badge';
 import { CrossCircledIcon } from '@radix-ui/react-icons';
 
 export interface Role {
@@ -11,12 +11,12 @@ export interface Role {
   name: string;
 }
 
-interface SelectedRoles {
+interface ISelectedRoles {
   roles: Role[];
   onRemove: (roleId: string) => void;
 }
 
-const SelectedRoles: FC<SelectedRoles> = ({ roles, onRemove }) => {
+const SelectedRoles: FC<ISelectedRoles> = ({ roles, onRemove }) => {
   if (roles?.length === 0) return null;
 
   return (
@@ -28,7 +28,7 @@ const SelectedRoles: FC<SelectedRoles> = ({ roles, onRemove }) => {
       {roles?.map((role) => (
         <div key={role.id} className="relative" role="listitem">
           {/* Product image with tooltip */}
-          <Badge className="flex gap-2" variant="permissions">
+          <Badge className="flex gap-2">
             {role?.label}{' '}
             <CrossCircledIcon
               className="h-3 w-3"

@@ -2,7 +2,7 @@
 import { type FC } from 'react';
 
 // Types
-import { Badge } from '@/components/ui/badge';
+import { Badge } from '~/components/ui/badge';
 import { CrossCircledIcon } from '@radix-ui/react-icons';
 
 export interface Junket {
@@ -11,12 +11,12 @@ export interface Junket {
   name: string;
 }
 
-interface SelectedJunkets {
+interface ISelectedJunkets {
   junkets: Junket[];
   onRemove: (roleId: string) => void;
 }
 
-const SelectedJunkets: FC<SelectedJunkets> = ({ junkets, onRemove }) => {
+const SelectedJunkets: FC<ISelectedJunkets> = ({ junkets, onRemove }) => {
   if (junkets?.length === 0) return null;
 
   return (
@@ -28,7 +28,7 @@ const SelectedJunkets: FC<SelectedJunkets> = ({ junkets, onRemove }) => {
       {junkets?.map((junket) => (
         <div key={junket.id} className="relative" role="listitem">
           {/* Product image with tooltip */}
-          <Badge className="flex gap-2" variant="permissions">
+          <Badge className="flex gap-2">
             {junket?.name}
             <CrossCircledIcon
               className="h-3 w-3"

@@ -1,5 +1,3 @@
-'use client';
-import React from 'react';
 import {
   Sheet,
   SheetContent,
@@ -10,7 +8,7 @@ import {
 import { Button } from '~/components/ui/button';
 import { Cross2Icon } from '@radix-ui/react-icons';
 import CreateUserForm from './create-user-form';
-import UpdateUserForm from './update-user-form';
+// import UpdateUserForm from './update-user-form';
 import useUserStore from '~/stores/user-store';
 
 function UserSheet() {
@@ -22,12 +20,12 @@ function UserSheet() {
     add: {
       title: 'Add User',
       description: `This sheet is for adding user`,
-      // form: <CreateUserForm />
+      form: <CreateUserForm />
     },
     update: {
       title: 'Update User',
       description: 'This sheet is for updating user.',
-      // form: <UpdateUserForm />
+      form: <></>
     }
   };
 
@@ -69,7 +67,7 @@ function UserSheet() {
             <span className="sr-only">Close</span>
           </Button>
         </SheetHeader>
-        {/* {sheetContent[sheetActions.action]?.form} */}
+        {sheetContent[sheetActions.action]?.form}
       </SheetContent>
     </Sheet>
   );

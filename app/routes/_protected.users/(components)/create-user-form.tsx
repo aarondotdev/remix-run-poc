@@ -1,9 +1,7 @@
-'use client';
-
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { Button } from '@/components/ui/button';
+import { Button } from '~/components/ui/button';
 import {
   Form,
   FormControl,
@@ -12,16 +10,15 @@ import {
   FormItem,
   FormLabel,
   FormMessage
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+} from '~/components/ui/form';
+import { Input } from '~/components/ui/input';
 import { Fragment, useState } from 'react';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger
-} from '@/components/ui/popover';
-import { PlusCircledIcon } from '@radix-ui/react-icons';
-import { cn } from '@/lib/utils';
+} from '~/components/ui/popover';
+import { cn } from '~/lib/utils';
 import {
   CommandInput,
   CommandList,
@@ -29,22 +26,21 @@ import {
   CommandGroup,
   CommandItem,
   Command
-} from '@/components/ui/command';
-import { Check, EyeIcon, EyeOffIcon, LoaderIcon } from 'lucide-react';
-import { useToast } from '@/components/ui/use-toast';
-import { useRouter } from 'next/navigation';
-import { useLookupFetcher } from '@/hooks/use-lookup-fetcher';
-import { API_BASE_URL } from '@/lib/helpers/fetching-helpers';
-import { useSession } from 'next-auth/react';
-import { decrypt } from '@/lib/functions/encrypt-session';
+} from '~/components/ui/command';
+import { Check, LoaderIcon } from 'lucide-react';
+import { useToast } from '~/components/ui/use-toast';
 import axios from 'axios';
-import { useLocale, useTranslations } from 'next-intl';
-import ErrorMessage from '@/components/ui/error-message';
+import ErrorMessage from '~/components/shared/error-message';
 import SelectedRoles from './selected-roles';
 import { Role } from './selected-roles';
 import SelectedJunkets, { Junket } from './selected-junkets';
-import useUserStore from '@/stores/user-store';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import useUserStore from '~/stores/user-store';
+import { ScrollArea } from '~/components/ui/scroll-area';
+import { useUserContext } from '~/context/user-provider';
+import { useLookupFetcher } from '~/lib/lookup-fetcher';
+import { useRevalidator } from '@remix-run/react';
+import { PlusCircledIcon } from '@radix-ui/react-icons';
+import { useEnvironmentProvider } from '~/context/environment-provider';
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -86,13 +82,11 @@ function CreateUserForm() {
   });
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
-  const { data: session } = useSession();
-  const decryptSession = decrypt(session?.user as string);
-  const createUserEndpoint = `${API_BASE_URL}/admin/users`;
-  const locale = useLocale();
-  const t = useTranslations('Translation');
   const setSheetActions = useUserStore((state) => state.setSheetActions);
+  const user = useUserContext()
+  const revalidator = useRevalidator()
+  const env = useEnvironmentProvider()
+  const url = `${env?.API_BASE_URL}/admin/users`;
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
@@ -105,7 +99,7 @@ function CreateUserForm() {
 
     axios
       .post(
-        createUserEndpoint,
+        url,
         {
           ...payload
         },
@@ -113,14 +107,13 @@ function CreateUserForm() {
           headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json',
-            Authorization: `Bearer ${decryptSession?.accessToken}`,
-            'Accept-Language': locale
+            Authorization: `Bearer ${user.access_token}`,
           }
         }
       )
       .then((response) => {
         form.reset();
-        router.refresh();
+        revalidator.revalidate()
         toast({
           variant: 'default',
           title: 'Success',
@@ -154,12 +147,13 @@ function CreateUserForm() {
     );
   };
 
-  const rolesEndpoint = `${API_BASE_URL}/admin/roles`;
-  const { lookupData, isLookupLoading, fetchLookup } = useLookupFetcher();
+  const rolesEndpoint = `${env?.API_BASE_URL}/admin/roles`;
   const roleIds = form.watch('role_ids');
   const junketSiteIds = form.watch('junket_site_ids');
-  const junketSiteEndpoint = `${API_BASE_URL}/admin/junket-sites/?filter[is_active]=1`;
+  const junketSiteEndpoint = `${env?.API_BASE_URL}/admin/junket-sites/?filter[is_active]=1`;
 
+
+  const { fetchLookup, isLookupLoading, lookupData } = useLookupFetcher()
   return (
     <Fragment>
       <Form {...form}>
@@ -172,12 +166,12 @@ function CreateUserForm() {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t('label_name')}</FormLabel>
+                    <FormLabel>Name</FormLabel>
                     <FormControl>
                       <Input
                         autoFocus
                         required
-                        placeholder={t('placeholder_enter_name')}
+                        placeholder="Enter Name"
                         {...field}
                       />
                     </FormControl>
@@ -194,7 +188,7 @@ function CreateUserForm() {
                     <FormControl>
                       <Input
                         required
-                        placeholder={t('placeholder_enter_email')}
+                        placeholder="Enter Email"
                         {...field}
                       />
                     </FormControl>
@@ -228,7 +222,7 @@ function CreateUserForm() {
                             className="w-full border-dashed"
                           >
                             <PlusCircledIcon className="mr-2 h-4 w-4" />
-                            {t('button_add_roles')}
+                            Add Roles
                           </Button>
                         </FormControl>
                       </PopoverTrigger>
@@ -236,7 +230,7 @@ function CreateUserForm() {
                         <Command>
                           <CommandInput
                             className="w-full"
-                            placeholder={t('placeholder_search_roles')}
+                            placeholder="Search"
                           />
                           <CommandList>
                             {isLookupLoading['roles'] ? (
@@ -246,7 +240,7 @@ function CreateUserForm() {
                             ) : (
                               <>
                                 <CommandEmpty>
-                                  {t('label_no_roles_found')}
+                                  No item found.
                                 </CommandEmpty>
                                 <CommandGroup>
                                   {lookupData['roles']?.data?.map(
@@ -258,8 +252,8 @@ function CreateUserForm() {
                                             (v) => v.name === option.name
                                           )
                                             ? value.filter(
-                                                (v) => v.name !== option.name
-                                              )
+                                              (v) => v.name !== option.name
+                                            )
                                             : [...value, option];
                                           form.setValue('role_ids', newValue);
                                         }}
@@ -294,7 +288,7 @@ function CreateUserForm() {
                 name="junket_site_ids"
                 render={({ field: { value } }) => (
                   <FormItem className="col-span-7">
-                    <FormLabel>{t('header_junket')}</FormLabel>
+                    <FormLabel>Junket</FormLabel>
                     {junketSiteIds?.length !== 0 && (
                       <div className="flex flex-wrap gap-2 rounded-sm border border-dashed border-muted px-4 py-2">
                         <SelectedJunkets
@@ -333,7 +327,7 @@ function CreateUserForm() {
                               </div>
                             ) : (
                               <>
-                                <CommandEmpty>No junket found.</CommandEmpty>
+                                <CommandEmpty>No item found.</CommandEmpty>
                                 <CommandGroup>
                                   {lookupData['junkets']?.data?.map(
                                     (junket: Junket) => (
@@ -345,8 +339,8 @@ function CreateUserForm() {
                                             (v) => v.id === junket.id
                                           )
                                             ? value.filter(
-                                                (v) => v.id !== junket.id
-                                              )
+                                              (v) => v.id !== junket.id
+                                            )
                                             : [...value, junket];
                                           form.setValue(
                                             'junket_site_ids',
@@ -384,11 +378,11 @@ function CreateUserForm() {
         </form>
       </Form>
       <div className="absolute bottom-0 left-0 flex w-full justify-end border border-t-muted bg-background p-3">
-        <Button onClick={form.handleSubmit(onSubmit)} type="submit">
+        <Button onClick={form.handleSubmit(onSubmit)} type="button">
           {isLoading ? (
             <LoaderIcon className="animate-spin repeat-infinite" />
           ) : (
-            t('button_save')
+            "Save"
           )}
         </Button>
       </div>

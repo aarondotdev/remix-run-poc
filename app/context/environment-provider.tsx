@@ -1,13 +1,15 @@
 import { createContext, useContext } from "react";
-import { SessionData } from "~/services/session";
 
+interface IEnv {
+    API_BASE_URL: string
+}
 
-interface ContextType extends SessionData {
+interface ContextType extends IEnv {
     children: React.ReactNode
 };
 
 const Context = createContext<ContextType | undefined>(undefined);
-const UserProvider = ({ children, data }: any) => {
+const EnvironmentProvider = ({ children, data }: any) => {
     return (
         <Context.Provider
             value={{ ...data }}
@@ -17,7 +19,7 @@ const UserProvider = ({ children, data }: any) => {
     );
 };
 
-export const useUserContext = () => {
+export const useEnvironmentProvider = () => {
     const context = useContext(Context);
     if (context === undefined) {
         throw new Error('useStore must be used within StoreContext');
@@ -26,4 +28,4 @@ export const useUserContext = () => {
     return context;
 };
 
-export default UserProvider;
+export default EnvironmentProvider;

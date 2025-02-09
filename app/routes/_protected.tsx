@@ -7,6 +7,8 @@ import { getPermissions, getUser } from '~/services/auth';
 import { getSession } from '~/services/session';
 import { NuqsAdapter } from 'nuqs/adapters/remix'
 import UserProvider from '~/context/user-provider';
+import { API_BASE_URL } from '~/services/actions';
+import EnvironmentProvider from '~/context/environment-provider';
 
 export const loader: LoaderFunction = async ({ request }) => {
     const session = await getSession(request.headers.get("Cookie"));
@@ -20,20 +22,27 @@ export const loader: LoaderFunction = async ({ request }) => {
         ...user,
         permissions: permissions?.data.map((item: any) => item.name)
     }
-    return json({ data });
+
+    const env = {
+        API_BASE_URL: API_BASE_URL
+    }
+
+    return json({ data, env });
 };
 
 function layout() {
-    const { data } = useLoaderData<typeof loader>()
+    const { data, env } = useLoaderData<typeof loader>()
 
     return (
         <NuqsAdapter>
             <UserProvider data={data} >
-                <SidebarProvider>
-                    <AppSidebar>
-                        <Outlet />
-                    </AppSidebar>
-                </SidebarProvider>
+                <EnvironmentProvider data={env}>
+                    <SidebarProvider>
+                        <AppSidebar>
+                            <Outlet />
+                        </AppSidebar>
+                    </SidebarProvider>
+                </EnvironmentProvider>
             </UserProvider>
         </NuqsAdapter>
     )

@@ -14,6 +14,7 @@ export type SessionData = {
   access_token: string;
   refresh_token: string;
   expires_in: number; //seconds 86400 / 1 day
+  permissions?: string[]
 };
 
 type SessionFlashData = {
