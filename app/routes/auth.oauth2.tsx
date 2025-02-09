@@ -3,8 +3,6 @@ import { authenticator, getUser } from "~/services/auth";
 import { commitSession, getSession } from "~/services/session";
 
 
-
-
 export const loader: LoaderFunction = async ({ request }) => {
     try {
         // Authenticate user using Remix Auth (this handles OAuth callback)

@@ -16,8 +16,8 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 
 function dashboard() {
-    const { data } = useLoaderData();
-    return <pre>Welcome, {JSON.stringify(data, null, 2)}!</pre>;
+    const { data } = useLoaderData<typeof loader>();
+    return <></>;
 }
 
 export default dashboard

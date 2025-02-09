@@ -1,11 +1,13 @@
 import React from 'react'
 import { AppSidebar } from '../components/shared/app-sidebar'
-import { Outlet } from '@remix-run/react'
+import { Outlet, useLoaderData } from '@remix-run/react'
 import { SidebarProvider } from '~/components/ui/sidebar'
 import { json, LoaderFunction, redirect } from '@remix-run/node';
-import { authenticator, getUser } from '~/services/auth';
+import { authenticator, getPermissions, getUser } from '~/services/auth';
 import { getSession } from '~/services/session';
 import { authenticate } from '~/services/actions';
+import { NuqsAdapter } from 'nuqs/adapters/remix'
+import UserProvider from '~/context/user-provider';
 
 export const loader: LoaderFunction = async ({ request }) => {
     const session = await getSession(request.headers.get("Cookie"));
@@ -13,18 +15,28 @@ export const loader: LoaderFunction = async ({ request }) => {
     if (!user) {
         return redirect("/login");
     }
-    
-    return json({ user });
+
+    const permissions = await getPermissions(user)
+    const data = {
+        ...user,
+        permissions: permissions?.data.map((item: any) => item.name)
+    }
+    return json({ data });
 };
 
 
 function layout() {
+    const { data } = useLoaderData<typeof loader>()
     return (
-        <SidebarProvider>
-            <AppSidebar>
-                <Outlet />
-            </AppSidebar>
-        </SidebarProvider>
+        <NuqsAdapter>
+            <UserProvider data={data} >
+                <SidebarProvider>
+                    <AppSidebar>
+                        <Outlet />
+                    </AppSidebar>
+                </SidebarProvider>
+            </UserProvider>
+        </NuqsAdapter>
     )
 }
 

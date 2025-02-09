@@ -66,3 +66,15 @@ export let getUser = async (tokens: SessionData) => {
 
   return await res.json()
 }
+
+export let getPermissions = async (tokens: SessionData) => {
+  const res = await fetch(`${API_BASE_URL}/user/permissions`, {
+    headers: {
+      Accept: 'application/json',
+      'Content-type': 'application/json',
+      Authorization: `Bearer ${tokens.access_token}`
+    }
+  })
+
+  return await res.json()
+}
