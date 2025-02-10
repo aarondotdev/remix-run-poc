@@ -1,19 +1,19 @@
-'use client';
-import { AlertModal } from '~/components/shared/alert-modal';
-import { Button } from '~/components/ui/button';
+"use client";
+import { AlertModal } from "~/components/shared/alert-modal";
+import { Button } from "~/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuTrigger
-} from '~/components/ui/dropdown-menu';
-import { useFetchPermissions } from '~/stores/permission-store';
-import useUserStore from '~/stores/user-store';
-import { Edit, MoreHorizontal, Trash, UserPenIcon } from 'lucide-react';
-import { useState } from 'react';
-import { Users } from '~/lib/resource-types';
-import { useUserContext } from '~/context/user-provider';
+  DropdownMenuTrigger,
+} from "~/components/ui/dropdown-menu";
+import { useFetchPermissions } from "~/stores/permission-store";
+import useUserStore from "~/stores/user-store";
+import { Edit, MoreHorizontal, Trash, UserPenIcon } from "lucide-react";
+import { useState } from "react";
+import { Users } from "~/lib/resource-types";
+import { useUserContext } from "~/context/user-provider";
 
 interface CellActionProps {
   data: Users;
@@ -24,23 +24,22 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const [open, setOpen] = useState(false);
   const setSheetActions = useUserStore((state) => state.setSheetActions);
   const setSelectedUser = useUserStore((state) => state.setSelectedUser);
-  const onConfirm = async () => { };
+  const onConfirm = async () => {};
 
   const handleUpdate = async () => {
     setSelectedUser(data);
-    setSheetActions({ action: 'update', open: true });
+    setSheetActions({ action: "update", open: true });
   };
 
-  const { data: user } = useUserContext()
+  const user = useUserContext();
 
-  const hasPermissionToDelete = user?.permissions?.includes('DELETE_USER');
-  const hasPermissionToUpdate = user?.permissions?.includes('UPDATE_USER');
+  const hasPermissionToDelete = user?.permissions?.includes("user.delete");
+  const hasPermissionToUpdate = user?.permissions?.includes("user.update");
 
   const handleAssignToCashier = () => {
     setSelectedUser(data);
-    setSheetActions({ open: true, action: 'assign_to_cashier' });
+    setSheetActions({ open: true, action: "assign_to_cashier" });
   };
-
 
   return (
     <>
@@ -60,9 +59,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           {!hasPermissionToDelete && !hasPermissionToUpdate && (
-            <DropdownMenuItem disabled>
-              No actions available
-            </DropdownMenuItem>
+            <DropdownMenuItem disabled>No actions available</DropdownMenuItem>
           )}
           {hasPermissionToUpdate && (
             <DropdownMenuItem onClick={handleAssignToCashier}>

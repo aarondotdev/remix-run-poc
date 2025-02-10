@@ -1,7 +1,12 @@
-import { ActionFunction, json, LoaderFunction, redirect, Session } from "@remix-run/node";
+import {
+  ActionFunction,
+  json,
+  LoaderFunction,
+  redirect,
+  Session,
+} from "@remix-run/node";
 import { refreshAccessToken } from "./refresh-token";
 import { commitSession, getSession } from "./session";
-
 
 export async function authenticate(
   request: Request,
@@ -10,7 +15,7 @@ export async function authenticate(
 ) {
   try {
     // get the auth data from the session
-    let accessToken = session.get("accessToken");
+    let user = session.get("user");
 
     // if not found, redirect to login, this means the user is not even logged-in
     if (!accessToken) throw redirect("/login");
@@ -26,9 +31,8 @@ export async function authenticate(
     // here, check if the error is an AuthorizationError (the one we throw above)
     if (error instanceof AuthorizationError) {
       // refresh the token somehow, this depends on the API you are using
-      let { accessToken, refreshToken, accessTokenExpires } = await refreshAccessToken(
-        session.get("refreshToken")
-      );
+      let { accessToken, refreshToken, accessTokenExpires } =
+        await refreshAccessToken(session.get("refreshToken"));
 
       // update the session with the new values
       session.set("accessToken", accessToken);
@@ -60,8 +64,6 @@ export let loader: LoaderFunction = async ({ request }) => {
   // and return the response
   return json(data);
 };
-
-
 
 export let action: ActionFunction = async ({ request }) => {
   // also read the session

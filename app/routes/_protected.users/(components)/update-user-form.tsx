@@ -1,27 +1,26 @@
-'use client';
+"use client";
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
-import { Button, buttonVariants } from '@/components/ui/button';
+import { Button, buttonVariants } from "~/components/ui/button";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Fragment, useState } from 'react';
-import { Junket, Role, SessionType, Users } from '@/types';
+  FormMessage,
+} from "~/components/ui/form";
+import { Input } from "~/components/ui/input";
+import { Fragment, useState } from "react";
 import {
   Popover,
   PopoverContent,
-  PopoverTrigger
-} from '@/components/ui/popover';
-import { CrossCircledIcon, PlusCircledIcon } from '@radix-ui/react-icons';
+  PopoverTrigger,
+} from "~/components/ui/popover";
+import { CrossCircledIcon, PlusCircledIcon } from "@radix-ui/react-icons";
 import {
   Command,
   CommandEmpty,
@@ -29,54 +28,50 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-  CommandSeparator
-} from '@/components/ui/command';
-import { cn } from '@/lib/utils';
-import { Check, InfoIcon, LoaderIcon } from 'lucide-react';
-import * as React from 'react';
-import { Badge } from '@/components/ui/badge';
-import { useToast } from '@/components/ui/use-toast';
-import { useRouter } from 'next/navigation';
-import { ScrollArea } from '@radix-ui/react-scroll-area';
-import { ScrollBar } from '@/components/ui/scroll-area';
-import useUserStore from '@/stores/user-store';
-import { API_BASE_URL } from '@/lib/helpers/fetching-helpers';
-import axios from 'axios';
-import ErrorMessage from '@/components/ui/error-message';
-import { useSession } from 'next-auth/react';
-import { decrypt } from '@/lib/functions/encrypt-session';
-import { useLocale, useTranslations } from 'next-intl';
-import { useLookupFetcher } from '@/hooks/use-lookup-fetcher';
-import SelectedRoles from './selected-roles';
-import SelectedJunkets from './selected-junkets';
-import { Alert, AlertDescription } from '@/components/ui/alert';
+  CommandSeparator,
+} from "~/components/ui/command";
+import { cn } from "~/lib/utils";
+import { Check, InfoIcon, LoaderIcon } from "lucide-react";
+import { useToast } from "~/components/ui/use-toast";
+import { ScrollArea, ScrollBar } from "~/components/ui/scroll-area";
+import useUserStore from "~/stores/user-store";
+import axios from "axios";
+import ErrorMessage from "~/components/shared/error-message";
+import SelectedRoles from "./selected-roles";
+import SelectedJunkets from "./selected-junkets";
+import { Alert, AlertDescription } from "~/components/ui/alert";
+import { useUserContext } from "~/context/user-provider";
+import { useEnvironmentProvider } from "~/context/environment-provider";
+import { useLookupFetcher } from "~/lib/lookup-fetcher";
+import { Junket, Role } from "~/lib/resource-types";
+import { useRevalidator } from "@remix-run/react";
 
 const formSchema = z.object({
   name: z.string().min(2, {
-    message: 'Name must be at least 2 characters.'
+    message: "Name must be at least 2 characters.",
   }),
   email: z
     .string()
-    .min(4, { message: 'Email is required.' })
-    .email('Invalid Email'),
+    .min(4, { message: "Email is required." })
+    .email("Invalid Email"),
   role_ids: z
     .array(
       z.object({
         id: z.string(),
         label: z.string(),
-        name: z.string()
+        name: z.string(),
       })
     )
-    .min(1, 'At least one role is required.'),
+    .min(1, "At least one role is required."),
   junket_site_ids: z
     .array(
       z.object({
         id: z.coerce.string(),
         code: z.string(),
-        name: z.string()
+        name: z.string(),
       })
     )
-    .min(1, 'At least one junket is required.')
+    .min(1, "At least one junket is required."),
 });
 
 function UpdateUserForm() {
@@ -87,63 +82,57 @@ function UpdateUserForm() {
       name: selectedUser?.name,
       email: selectedUser?.email,
       role_ids: selectedUser?.roles,
-      junket_site_ids: (selectedUser?.junketSites as any) || []
-    }
+      junket_site_ids: (selectedUser?.junketSites as any) || [],
+    },
   });
 
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
-  const router = useRouter();
   const { isDirty } = form.formState;
-
-  const t = useTranslations('Translation');
-
-  const locale = useLocale();
-  const session = useSession();
-  const sessionData = session.data as SessionType;
-  const decryptSession = decrypt(sessionData?.user as unknown as string);
   const setSheetActions = useUserStore((state) => state.setSheetActions);
+  const user = useUserContext();
+  const env = useEnvironmentProvider();
+  const revalidator = useRevalidator();
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const url = `${API_BASE_URL}/admin/users/${selectedUser?.id}`;
+    const url = `${env.API_BASE_URL}/admin/users/${selectedUser?.id}`;
     setIsLoading(true);
 
     const payload = {
       ...values,
       role_ids: roleIds?.map((item) => item?.id),
-      junket_site_ids: junketSiteIds?.map((item) => item?.id)
+      junket_site_ids: junketSiteIds?.map((item) => item?.id),
     };
 
     axios
       .put(
         url,
         {
-          ...payload
+          ...payload,
         },
         {
           headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-            Authorization: `Bearer ${decryptSession?.accessToken}`,
-            'Accept-Language': locale
-          }
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `Bearer ${user?.access_token}`,
+          },
         }
       )
       .then((response) => {
         form.reset({}, { keepValues: true });
-        router.refresh();
+        revalidator.revalidate();
         toast({
-          title: 'Success',
+          title: "Success",
           description: response?.data?.message,
-          variant: 'default'
+          variant: "default",
         });
-        setSheetActions({ action: 'update', open: false });
+        setSheetActions({ action: "update", open: false });
       })
       .catch((error) => {
         toast({
-          variant: 'destructive',
-          title: 'Error',
-          description: <ErrorMessage errors={error?.response?.data?.error} />
+          variant: "destructive",
+          title: "Error",
+          description: <ErrorMessage errors={error?.response?.data?.error} />,
         });
       })
       .finally(() => {
@@ -153,24 +142,24 @@ function UpdateUserForm() {
 
   const handleRemoveRole = (roleId: string) => {
     form.setValue(
-      'role_ids',
-      form.getValues('role_ids').filter((r: any) => r.id != roleId),
+      "role_ids",
+      form.getValues("role_ids").filter((r: any) => r.id != roleId),
       { shouldDirty: true }
     );
   };
   const handleRemoveJunket = (junketId: string) => {
     form.setValue(
-      'junket_site_ids',
-      form.getValues('junket_site_ids').filter((j: any) => j.id != junketId),
+      "junket_site_ids",
+      form.getValues("junket_site_ids").filter((j: any) => j.id != junketId),
       { shouldDirty: true }
     );
   };
 
-  const junketSiteEndpoint = `${API_BASE_URL}/admin/junket-sites/?filter[is_active]=1`;
-  const rolesEndpoint = `${API_BASE_URL}/admin/roles`;
+  const junketSiteEndpoint = `${env.API_BASE_URL}/admin/junket-sites/?filter[is_active]=1`;
+  const rolesEndpoint = `${env.API_BASE_URL}/admin/roles`;
   const { lookupData, isLookupLoading, fetchLookup } = useLookupFetcher();
-  const roleIds = form.watch('role_ids');
-  const junketSiteIds = form.watch('junket_site_ids');
+  const roleIds = form.watch("role_ids");
+  const junketSiteIds = form.watch("junket_site_ids");
 
   return (
     <Fragment>
@@ -190,14 +179,9 @@ function UpdateUserForm() {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t('label_name')}</FormLabel>
+                    <FormLabel>Name</FormLabel>
                     <FormControl>
-                      <Input
-                        autoFocus
-                        required
-                        placeholder={t('placeholder_enter_name')}
-                        {...field}
-                      />
+                      <Input required placeholder="Enter Name" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -210,11 +194,7 @@ function UpdateUserForm() {
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input
-                        required
-                        placeholder={t('placeholder_enter_email')}
-                        {...field}
-                      />
+                      <Input required placeholder="Enter Email" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -236,7 +216,7 @@ function UpdateUserForm() {
                     )}
                     <Popover
                       onOpenChange={() => {
-                        fetchLookup(rolesEndpoint, 'roles');
+                        fetchLookup(rolesEndpoint, "roles");
                       }}
                     >
                       <PopoverTrigger asChild>
@@ -246,7 +226,7 @@ function UpdateUserForm() {
                             className="w-full border-dashed"
                           >
                             <PlusCircledIcon className="mr-2 h-4 w-4" />
-                            {t('button_add_roles')}
+                            Add Roles
                           </Button>
                         </FormControl>
                       </PopoverTrigger>
@@ -254,20 +234,18 @@ function UpdateUserForm() {
                         <Command>
                           <CommandInput
                             className="w-full"
-                            placeholder={t('placeholder_search_roles')}
+                            placeholder="Search"
                           />
                           <CommandList>
-                            {isLookupLoading['roles'] ? (
+                            {isLookupLoading["roles"] ? (
                               <div className="flex h-10 w-full items-center justify-center">
                                 <LoaderIcon className="animate-spin repeat-infinite" />
                               </div>
                             ) : (
                               <>
-                                <CommandEmpty>
-                                  {t('label_no_roles_found')}
-                                </CommandEmpty>
+                                <CommandEmpty>No items found</CommandEmpty>
                                 <CommandGroup>
-                                  {lookupData['roles']?.data?.map(
+                                  {lookupData["roles"]?.data?.map(
                                     (option: Role) => (
                                       <CommandItem
                                         key={option.id}
@@ -279,19 +257,19 @@ function UpdateUserForm() {
                                                 (v) => v.name !== option.name
                                               )
                                             : [...value, option];
-                                          form.setValue('role_ids', newValue, {
-                                            shouldDirty: true
+                                          form.setValue("role_ids", newValue, {
+                                            shouldDirty: true,
                                           });
                                         }}
                                       >
                                         <Check
                                           className={cn(
-                                            'mr-2 h-4 w-4',
+                                            "mr-2 h-4 w-4",
                                             roleIds.some(
                                               (v) => v.id === option.id
                                             )
-                                              ? 'opacity-100'
-                                              : 'opacity-0'
+                                              ? "opacity-100"
+                                              : "opacity-0"
                                           )}
                                         />
                                         {option.label}
@@ -314,7 +292,7 @@ function UpdateUserForm() {
                 name="junket_site_ids"
                 render={({ field: { value } }) => (
                   <FormItem className="col-span-7">
-                    <FormLabel>{t('header_junket')}</FormLabel>
+                    <FormLabel>Junket</FormLabel>
                     {junketSiteIds?.length !== 0 && (
                       <div className="flex flex-wrap gap-2 rounded-sm border border-dashed border-muted px-4 py-2">
                         <SelectedJunkets
@@ -325,7 +303,7 @@ function UpdateUserForm() {
                     )}
                     <Popover
                       onOpenChange={() => {
-                        fetchLookup(junketSiteEndpoint, 'junkets');
+                        fetchLookup(junketSiteEndpoint, "junkets");
                       }}
                     >
                       <PopoverTrigger asChild>
@@ -347,7 +325,7 @@ function UpdateUserForm() {
                             placeholder="Search junket..."
                           />
                           <CommandList>
-                            {isLookupLoading['junkets'] ? (
+                            {isLookupLoading["junkets"] ? (
                               <div className="flex h-10 w-full items-center justify-center">
                                 <LoaderIcon className="animate-spin repeat-infinite" />
                               </div>
@@ -355,7 +333,7 @@ function UpdateUserForm() {
                               <>
                                 <CommandEmpty>No junket found.</CommandEmpty>
                                 <CommandGroup>
-                                  {lookupData['junkets']?.data?.map(
+                                  {lookupData["junkets"]?.data?.map(
                                     (junket: Junket) => (
                                       <CommandItem
                                         value={junket.name}
@@ -369,7 +347,7 @@ function UpdateUserForm() {
                                               )
                                             : [...value, junket];
                                           form.setValue(
-                                            'junket_site_ids',
+                                            "junket_site_ids",
                                             newValue as any,
                                             { shouldDirty: true }
                                           );
@@ -377,12 +355,12 @@ function UpdateUserForm() {
                                       >
                                         <Check
                                           className={cn(
-                                            'mr-2 h-4 w-4',
+                                            "mr-2 h-4 w-4",
                                             junketSiteIds?.some(
                                               (v) => v.id === junket?.id
                                             )
-                                              ? 'opacity-100'
-                                              : 'opacity-0'
+                                              ? "opacity-100"
+                                              : "opacity-0"
                                           )}
                                         />
                                         {junket.name}
@@ -408,13 +386,13 @@ function UpdateUserForm() {
       <div className="absolute bottom-0 left-0 flex w-full justify-end border border-t-muted bg-background p-3">
         <Button
           onClick={form.handleSubmit(onSubmit)}
-          type="submit"
+          type="button"
           disabled={!isDirty}
         >
           {isLoading ? (
             <LoaderIcon className="animate-spin repeat-infinite" />
           ) : (
-            t('button_save')
+            "Save"
           )}
         </Button>
       </div>

@@ -3,13 +3,13 @@ import {
   SheetContent,
   SheetDescription,
   SheetHeader,
-  SheetTitle
-} from '~/components/ui/sheet';
-import { Button } from '~/components/ui/button';
-import { Cross2Icon } from '@radix-ui/react-icons';
-import CreateUserForm from './create-user-form';
-// import UpdateUserForm from './update-user-form';
-import useUserStore from '~/stores/user-store';
+  SheetTitle,
+} from "~/components/ui/sheet";
+import { Button } from "~/components/ui/button";
+import { Cross2Icon } from "@radix-ui/react-icons";
+import CreateUserForm from "./create-user-form";
+import UpdateUserForm from "./update-user-form";
+import useUserStore from "~/stores/user-store";
 
 function UserSheet() {
   type SheetContentType = {
@@ -18,15 +18,15 @@ function UserSheet() {
 
   const sheetContent: SheetContentType = {
     add: {
-      title: 'Add User',
+      title: "Add User",
       description: `This sheet is for adding user`,
-      form: <CreateUserForm />
+      form: <CreateUserForm />,
     },
     update: {
-      title: 'Update User',
-      description: 'This sheet is for updating user.',
-      form: <></>
-    }
+      title: "Update User",
+      description: "This sheet is for updating user.",
+      form: <UpdateUserForm />,
+    },
   };
 
   const sheetActions = useUserStore((state) => state.sheetActions);
@@ -39,7 +39,7 @@ function UserSheet() {
   };
 
   const isOpen =
-    (sheetActions.action === 'add' || sheetActions.action === 'update') &&
+    (sheetActions.action === "add" || sheetActions.action === "update") &&
     !!sheetActions.open;
 
   return (
