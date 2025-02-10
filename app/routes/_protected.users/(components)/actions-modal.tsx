@@ -8,7 +8,7 @@ import {
   DialogTitle,
   DialogTrigger
 } from '~/components/ui/dialog';
-import { API_BASE_URL } from '~/services/actions';
+import { API_BASE_URL } from '~/services/authenticate';
 import { useToast } from '~/components/ui/use-toast';
 import { LoaderIcon } from 'lucide-react';
 import { useState } from 'react';

@@ -1,6 +1,6 @@
 import { Authenticator } from "remix-auth";
 import { OAuth2Strategy, CodeChallengeMethod } from "remix-auth-oauth2";
-import { API_BASE_URL } from "./actions";
+import { API_BASE_URL } from "./authenticate";
 import { json, SessionData } from "@remix-run/node";
 import { User } from "./session";
 

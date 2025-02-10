@@ -2,7 +2,7 @@ import { json, LoaderFunction, redirect, SessionData } from '@remix-run/node';
 import React, { useEffect } from 'react'
 import { getSession } from '~/services/session';
 import { fetchData, getHeaders } from '~/lib/fetch-data';
-import { API_BASE_URL } from '~/services/actions';
+import { API_BASE_URL } from '~/services/authenticate';
 import { useLoaderData, useRevalidator, useSearchParams } from '@remix-run/react';
 import normalizer from '~/lib/json-normalizer';
 import PageContainer from '~/components/shared/page-container';

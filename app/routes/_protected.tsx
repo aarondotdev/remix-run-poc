@@ -7,13 +7,14 @@ import { getPermissions, getUser } from "~/services/auth";
 import { getSession } from "~/services/session";
 import { NuqsAdapter } from "nuqs/adapters/remix";
 import UserProvider from "~/context/user-provider";
-import { API_BASE_URL } from "~/services/actions";
+import { API_BASE_URL, authenticate } from "~/services/authenticate";
 import EnvironmentProvider from "~/context/environment-provider";
 import { Toaster } from "~/components/ui/toaster";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request.headers.get("Cookie"));
-  const user = session.get("user");
+  const user = await authenticate(request, session);
+
   if (!user) {
     return redirect("/login");
   }
