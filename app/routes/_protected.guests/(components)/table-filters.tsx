@@ -9,10 +9,10 @@ export function useTableFilter() {
   const params = new URLSearchParams();
 
   const setPageNumber = (value: string) => {
+    params.set("page[number]", value);
     setSearchParams(params, {
       preventScrollReset: true,
     });
-    params.set("page[number]", value);
   };
 
   const setSearchQuery = (value: string) => {

@@ -9,7 +9,7 @@ import {
 } from "~/components/ui/dropdown-menu";
 import { MoreHorizontal, SquareUserIcon } from "lucide-react";
 import { useState } from "react";
-import { Guest, Users } from "~/lib/resource-types";
+import { Guest } from "~/lib/resource-types";
 import { useUserContext } from "~/context/user-provider";
 import axios from "axios";
 import useGuestStore from "~/stores/guests-store";

@@ -64,7 +64,7 @@ const SelectAgent: FC<IDynamicComboBox> = ({
     "filter[is_active]": "1",
   });
 
-  const url = `${env.API_BASE_URL}/admin/agents/${queryString}`;
+  const url = `${env.API_BASE_URL}/admin/agents/?${queryString}`;
 
   const { data, error, size, setSize, isValidating, mutate, isLoading } =
     useSWRInfinite((index) => `${url}&page[number]=${index + 1}`, fetcher);

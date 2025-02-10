@@ -11,7 +11,6 @@ import {
 } from "~/components/ui/dialog";
 import { useToast } from "~/components/ui/use-toast";
 import { LoaderIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import {
@@ -122,11 +121,14 @@ export function AssignAgentModal() {
   }
 
   const handleCancel = async () => {
-    setSelectedAgent(undefined);
     setSheetActions({ ...sheetActions, open: false });
     if (!!form.getValues("agent_id")) {
       form.reset();
     }
+
+    setTimeout(() => {
+      setSelectedAgent(undefined);
+    }, 1000)
   };
 
   const isModalOpen = sheetActions.open && isActionAssignAgent;

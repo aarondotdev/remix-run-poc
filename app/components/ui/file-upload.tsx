@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import Image from "next/image";
 import { Cross2Icon, FileTextIcon, UploadIcon } from "@radix-ui/react-icons";
 import Dropzone, {
   type DropzoneProps,
@@ -116,7 +115,6 @@ export function FileUploader(props: FileUploaderProps) {
     onChange: onValueChange,
   });
 
-  const t = useTranslations("Translation");
 
   const onDrop = React.useCallback(
     (acceptedFiles: File[] | File, rejectedFiles: FileRejection[]) => {
@@ -237,14 +235,13 @@ export function FileUploader(props: FileUploaderProps) {
                 </div>
                 <div className="flex flex-col gap-px">
                   <p className="font-medium text-muted-foreground">
-                    {t("message_drag_and_drop")}
+                    Drag and drop files here, or click to select files
                   </p>
                   <p className="text-sm text-muted-foreground/70">
-                    {t("message_you_can_upload")}
+                    You can upload
                     {maxFileCount > 1
-                      ? ` ${
-                          maxFileCount === Infinity ? "multiple" : maxFileCount
-                        }
+                      ? ` ${maxFileCount === Infinity ? "multiple" : maxFileCount
+                      }
                       files (up to ${formatBytes(maxSize)} each)`
                       : ` a file with ${formatBytes(maxSize)}`}
                   </p>
@@ -279,7 +276,6 @@ interface FileCardProps {
 }
 
 function FileCard({ file, progress, onRemove }: FileCardProps) {
-  const t = useTranslations("Translation");
   return (
     <div className="relative flex items-center gap-2.5">
       <div className="flex flex-1 gap-2.5">
@@ -305,7 +301,7 @@ function FileCard({ file, progress, onRemove }: FileCardProps) {
           onClick={onRemove}
         >
           <Cross2Icon className="size-4" aria-hidden="true" />
-          <span className="sr-only">{t("button_remove_file")}</span>
+          <span className="sr-only">Remove file</span>
         </Button>
       </div>
     </div>
@@ -323,12 +319,11 @@ interface FilePreviewProps {
 function FilePreview({ file }: FilePreviewProps) {
   if (file.type.startsWith("image/")) {
     return (
-      <Image
+      <img
         src={file.preview}
         alt={file.name}
         width={48}
         height={48}
-        loading="lazy"
         className="aspect-square shrink-0 rounded-md object-cover"
       />
     );

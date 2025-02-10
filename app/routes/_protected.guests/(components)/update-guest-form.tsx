@@ -108,9 +108,7 @@ function UpdateGuestForm() {
                     (selectedAgent as Agent) || selectedGuest?.agent
                   }
                   setSelectedItem={setSelectedAgent}
-                  onChange={(value) => {
-                    field.onChange(value);
-                  }}
+                  onChange={field.onChange}
                 />
                 <FormMessage />
               </FormItem>

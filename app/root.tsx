@@ -52,7 +52,7 @@ export function Root() {
     <html
       lang={loaderData?.locale ?? "en"}
       data-theme={theme ?? ""}
-      className={theme ?? ""}
+      className={loaderData?.theme ?? ""}
     >
       <head>
         <meta charSet="utf-8" />

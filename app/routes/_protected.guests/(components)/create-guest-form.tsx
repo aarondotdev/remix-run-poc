@@ -13,20 +13,6 @@ import {
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import { Fragment, useState } from "react";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "~/components/ui/popover";
-import { cn } from "~/lib/utils";
-import {
-  CommandInput,
-  CommandList,
-  CommandEmpty,
-  CommandGroup,
-  CommandItem,
-  Command,
-} from "~/components/ui/command";
 import { Check, LoaderIcon } from "lucide-react";
 import { useToast } from "~/components/ui/use-toast";
 import axios from "axios";
@@ -35,13 +21,11 @@ import { ScrollArea } from "~/components/ui/scroll-area";
 import { useUserContext } from "~/context/user-provider";
 import { useLookupFetcher } from "~/lib/lookup-fetcher";
 import { useRevalidator } from "@remix-run/react";
-import { CaretSortIcon, PlusCircledIcon } from "@radix-ui/react-icons";
 import { useEnvironmentProvider } from "~/context/environment-provider";
 import { Agent, KYCDOcumentType, Membership } from "~/lib/resource-types";
 import { fetchData, getHeaders } from "~/lib/fetch-data";
 import normalizer from "~/lib/json-normalizer";
 import { FileUploader } from "~/components/ui/file-upload";
-import { RadioGroup } from "@radix-ui/react-dropdown-menu";
 import useSWR from "swr";
 import Card1 from "~/assets/images/card-01.svg";
 import Card2 from "~/assets/images/card-02.svg";
@@ -55,7 +39,9 @@ import {
   SelectValue,
 } from "~/components/ui/select";
 import { PhoneInput } from "~/components/ui/phone-input";
-import { RadioGroupItem } from "~/components/ui/radio-group";
+import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
+import SelectAgent from "~/components/shared-lookups/select-agent";
+import { cn } from "~/lib/utils";
 
 const formSchema = z.object({
   internal_ref_code: z.string().min(1, { message: "Required." }),
@@ -140,7 +126,6 @@ function CreateGuestForm() {
   };
 
   const membershipEndpoint = `${env.API_BASE_URL}/admin/memberships`;
-  const agentsEndpoint = `${env.API_BASE_URL}/admin/agents?filter[is_active]=1`;
   const idDocumentTypeEndpoint = `${env.API_BASE_URL}/admin/kyc/document-type`;
   const { data: membershipsData, isLoading: membershipLoading } = useSWR(
     membershipEndpoint,
@@ -249,75 +234,13 @@ function CreateGuestForm() {
                 render={({ field }) => (
                   <FormItem className="col-span-6">
                     <FormLabel>Agent</FormLabel>
-                    <Popover
-                      open={isSelectAgentOpen}
-                      onOpenChange={setIsSelectAgentOpen}
-                    >
-                      <PopoverTrigger asChild>
-                        <FormControl>
-                          <Button
-                            variant="outline"
-                            role="combobox"
-                            className="flex w-full items-center justify-between border-dashed px-3"
-                            onClick={() =>
-                              fetchLookup(agentsEndpoint, "agents")
-                            }
-                          >
-                            {selectedAgent
-                              ? selectedAgent?.name
-                              : "Select Agent"}
-                            <CaretSortIcon className="h-4 w-4 opacity-50" />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-full p-0" align="start">
-                        <Command>
-                          <CommandInput
-                            className="w-full"
-                            placeholder="Search agent..."
-                          />
-                          <CommandList>
-                            {isLookupLoading["agents"] ? (
-                              <div className="flex h-10 w-full items-center justify-center">
-                                <LoaderIcon className="animate-spin repeat-infinite" />
-                              </div>
-                            ) : (
-                              <>
-                                <CommandEmpty>No agent found.</CommandEmpty>
-                                <CommandGroup>
-                                  {lookupData["agents"]?.data?.map(
-                                    (agent: Agent) => (
-                                      <CommandItem
-                                        value={agent.name}
-                                        key={agent.id}
-                                        onSelect={() => {
-                                          setIsSelectAgentOpen(false);
-                                          setSelectedAgent(agent);
-                                          form.setValue(
-                                            "agent_id",
-                                            agent.id.toString()
-                                          );
-                                        }}
-                                      >
-                                        <Check
-                                          className={cn(
-                                            "mr-2 h-4 w-4",
-                                            agent.id == field.value
-                                              ? "opacity-100"
-                                              : "opacity-0"
-                                          )}
-                                        />
-                                        {agent.name}
-                                      </CommandItem>
-                                    )
-                                  )}
-                                </CommandGroup>
-                              </>
-                            )}
-                          </CommandList>
-                        </Command>
-                      </PopoverContent>
-                    </Popover>
+                    <SelectAgent
+                      identifier="id"
+                      value={field.value}
+                      onChange={field.onChange}
+                      selectedItem={selectedAgent as Agent}
+                      setSelectedItem={setSelectedAgent}
+                    />
                     <FormMessage />
                   </FormItem>
                 )}
@@ -451,8 +374,8 @@ function CreateGuestForm() {
                           onValueChange={field.onChange}
                           maxFileCount={3}
                           maxSize={4 * 1024 * 1024}
-                          // pass the onUpload function here for direct upload
-                          // onUpload={uploadFiles}
+                        // pass the onUpload function here for direct upload
+                        // onUpload={uploadFiles}
                         />
                       </FormControl>
                       <FormMessage />

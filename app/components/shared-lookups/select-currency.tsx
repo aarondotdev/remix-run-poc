@@ -67,7 +67,8 @@ const SelectCurrency: FC<IDynamicComboBox> = ({
     "filter[is_active]": "1",
     "filter[q]": search,
   });
-  const url = `${env.API_BASE_URL}/admin/currencies/${queryString}`;
+  
+  const url = `${env.API_BASE_URL}/admin/currencies/?${queryString}`;
 
   const { data, error, size, setSize, isValidating, mutate, isLoading } =
     useSWRInfinite((index) => `${url}&page[number]=${index + 1}`, fetcher);
