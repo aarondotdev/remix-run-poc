@@ -3,34 +3,34 @@ import { cn } from '~/lib/utils';
 import { LoaderIcon } from 'lucide-react';
 import { useEffect, useState, useTransition } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
-import { UseQueryStatesOptions } from 'nuqs';
+import { Options } from 'nuqs';
 
 interface DataTableSearchProps {
   searchKey: string;
   searchQuery: string;
   setStatusQuery?: (
     value: string | ((old: string) => string | null) | null,
-    options?: UseQueryStatesOptions<any> | undefined
+    options?: Options
   ) => Promise<URLSearchParams>;
   setSearchQuery: (
     value: string | ((old: string) => string | null) | null,
-    options?: UseQueryStatesOptions<any> | undefined
+    options?: Options
   ) => Promise<URLSearchParams>;
   setSearchFilterId?: (
     value: string | ((old: string) => string | null) | null,
-    options?: UseQueryStatesOptions<any> | undefined
+    options?: Options
   ) => Promise<URLSearchParams>;
   setSearchFilterDate?: (
     value: string | ((old: string) => string | null) | null,
-    options?: UseQueryStatesOptions<any> | undefined
+    options?: Options
   ) => Promise<URLSearchParams>;
   setColorQuery?: (
     value: string | ((old: string) => string | null) | null,
-    options?: UseQueryStatesOptions<any> | undefined
+    options?: Options
   ) => Promise<URLSearchParams>;
   setPage: <Shallow>(
     value: number | ((old: number) => number | null) | null,
-    options?: UseQueryStatesOptions<any> | undefined
+    options?: Options
   ) => Promise<URLSearchParams>;
 }
 
@@ -51,8 +51,7 @@ export function DataTableSearch({
   }, [searchQuery]);
 
   const handleSearch = (value: string) => {
-    setSearchQuery(value);
-    console.log(value)
+    setSearchQuery(value, { startTransition });
     setPage(1); // Reset page to 1 when search changes
 
     if (setColorQuery) {

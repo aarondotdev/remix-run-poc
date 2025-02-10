@@ -19,7 +19,7 @@ function TableToolBar() {
     isAnyFilterActive,
     resetFilters,
     searchQuery,
-    setPageNumber,
+    setPage,
     setSearchQuery,
   } = useTableFilter();
   return (
@@ -28,7 +28,7 @@ function TableToolBar() {
         searchKey="name"
         searchQuery={searchQuery as string}
         setSearchQuery={setSearchQuery}
-        setPage={setPageNumber}
+        setPage={setPage}
       />
       {/* <DataTableFilterBox
         filterKey="gender"

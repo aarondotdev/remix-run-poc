@@ -1,10 +1,10 @@
 import {
-    createSearchParamsCache,
     createSerializer,
     parseAsBoolean,
     parseAsInteger,
-    parseAsString
-} from 'nuqs/server';
+    parseAsString,
+    useQueryStates
+} from 'nuqs';
 
 export let searchParams = {
     'page[number]': parseAsInteger.withDefault(1),
@@ -39,5 +39,9 @@ export let searchParams = {
     include: parseAsString.withDefault('')
 };
 
-export let searchParamsCache = createSearchParamsCache(searchParams);
+
+export function useNuqsState() {
+    return useQueryStates(searchParams);
+}
+
 export let serialize = createSerializer(searchParams);

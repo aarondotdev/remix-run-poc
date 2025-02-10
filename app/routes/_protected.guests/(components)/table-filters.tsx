@@ -1,31 +1,28 @@
-import { useCallback, useMemo } from "react";
-import { useSearchParams } from "@remix-run/react";
+'use client';
+
+import { searchParams } from '~/lib/search-params';
+import { useQueryState } from 'nuqs';
+import { useCallback, useMemo } from 'react';
+
 
 export function useTableFilter() {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchQuery, setSearchQuery] = useQueryState(
+    'filter[q]',
+    searchParams['filter[q]']
+      .withOptions({ shallow: false, history: 'push' })
+      .withDefault('')
+  );
 
-  const searchQuery = searchParams.get("filter[q]");
-  const pageNumber = searchParams.get("page[number]");
-  const params = new URLSearchParams();
-
-  const setPageNumber = (value: string) => {
-    params.set("page[number]", value);
-    setSearchParams(params, {
-      preventScrollReset: true,
-    });
-  };
-
-  const setSearchQuery = (value: string) => {
-    params.set("filter[q]", value);
-    setSearchParams(params, {
-      preventScrollReset: true,
-    });
-  };
+  const [page, setPage] = useQueryState(
+    'page[number]',
+    searchParams['page[number]'].withDefault(1)
+  );
 
   const resetFilters = useCallback(() => {
-    setPageNumber("");
-    setSearchQuery("");
-  }, [searchQuery, pageNumber]);
+    setSearchQuery(null);
+
+    setPage(1);
+  }, [setSearchQuery, setPage]);
 
   const isAnyFilterActive = useMemo(() => {
     return !!searchQuery;
@@ -34,9 +31,9 @@ export function useTableFilter() {
   return {
     searchQuery,
     setSearchQuery,
-    pageNumber,
-    setPageNumber,
+    page,
+    setPage,
     resetFilters,
-    isAnyFilterActive,
+    isAnyFilterActive
   };
 }
