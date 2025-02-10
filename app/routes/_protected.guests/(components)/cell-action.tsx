@@ -29,7 +29,6 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const { toast } = useToast();
   const env = useEnvironmentProvider();
   const revalidator = useRevalidator();
-
   const deleteUrl = `${env.API_BASE_URL}/admin/players/${data.id}`;
 
   const onConfirm = async () => {

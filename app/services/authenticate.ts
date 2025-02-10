@@ -33,8 +33,7 @@ export async function authenticate(
       // refresh the token somehow, this depends on the API you are using
       let user = session.get("user");
 
-      let { access_token, refresh_token, expires_in } =
-        await refreshAccessToken(user);
+      let { access_token, refresh_token, expires_in } = await user;
 
       const currentUser = {
         ...user,

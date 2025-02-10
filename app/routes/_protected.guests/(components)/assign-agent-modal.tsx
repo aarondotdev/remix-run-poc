@@ -31,8 +31,8 @@ import { useEnvironmentProvider } from "~/context/environment-provider";
 import ErrorMessage from "~/components/shared/error-message";
 import { Agent } from "~/lib/resource-types";
 import SelectAgent from "~/components/shared-lookups/select-agent";
-import { useRevalidator } from "react-router";
 import { useUserContext } from "~/context/user-provider";
+import { useRevalidator } from "@remix-run/react";
 
 type DialogContentType = {
   [key: string]: any;

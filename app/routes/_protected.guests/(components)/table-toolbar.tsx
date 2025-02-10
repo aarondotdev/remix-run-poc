@@ -1,40 +1,32 @@
-import { DataTableSearch } from '~/components/ui/data-table/search';
-import { useTableFilter } from './table-filters';
-import { Button } from '~/components/ui/button';
-import { Plus } from 'lucide-react';
-import UserSheet from './user-sheet';
-import useUserStore from '~/stores/user-store';
-import { Table } from '@tanstack/react-table';
-import { DataTableViewOptions } from '~/components/ui/data-table/data-table-view-options';
-import { useUserContext } from '~/context/user-provider';
+import { DataTableSearch } from "~/components/ui/data-table/search";
+import { useTableFilter } from "./table-filters";
+import { Button } from "~/components/ui/button";
+import { useUserContext } from "~/context/user-provider";
+import useGuestStore from "~/stores/guests-store";
+import GuestSheet from "./guest-sheet";
+import { AssignAgentModal } from "./assign-agent-modal";
 
-interface DataTableToolbarProps<TData> {
-  table: Table<TData>;
-}
-
-function TableToolBar<TData>({ table }: DataTableToolbarProps<TData>) {
-  const sheetActions = useUserStore((state) => state.sheetActions);
-  const setSheetActions = useUserStore((state) => state.setSheetActions);
-  const data = useUserContext()
-
-  const hasPermissionToCreate = data?.permissions?.includes('user.create');
+function TableToolBar() {
+  const setSheetActions = useGuestStore((state) => state.setSheetActions);
+  const user = useUserContext();
+  const hasPermissionToCreate = user?.permissions?.includes("player.create");
 
   const handleAdd = () => {
-    setSheetActions({ action: 'add', open: true });
+    setSheetActions({ action: "add", open: true });
   };
 
   const {
     isAnyFilterActive,
     resetFilters,
     searchQuery,
+    setPageNumber,
     setSearchQuery,
-    setPageNumber
   } = useTableFilter();
   return (
-    <div className="flex w-full justify-between gap-x-2">
+    <div className="flex w-full justify-between">
       <DataTableSearch
         searchKey="name"
-        searchQuery={searchQuery}
+        searchQuery={searchQuery as string}
         setSearchQuery={setSearchQuery}
         setPage={setPageNumber}
       />
@@ -49,15 +41,10 @@ function TableToolBar<TData>({ table }: DataTableToolbarProps<TData>) {
         isFilterActive={isAnyFilterActive}
         onReset={resetFilters}
       /> */}
-      <DataTableViewOptions table={table} />
-      {hasPermissionToCreate && (
-        <Button variant="default" onClick={handleAdd}>
-          <Plus className="mr-2 h-4 w-4" /> Add New
-        </Button>
-      )}
-      <UserSheet />
-      {/*
-      <ActionModal /> */}
+
+      <GuestSheet />
+      <AssignAgentModal />
+      {hasPermissionToCreate && <Button onClick={handleAdd}>Add Guest</Button>}
     </div>
   );
 }

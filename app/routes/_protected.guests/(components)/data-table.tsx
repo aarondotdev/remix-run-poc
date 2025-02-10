@@ -8,7 +8,7 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import React, { useTransition } from "react";
+import React from "react";
 
 import { Button } from "~/components/ui/button";
 import {
@@ -104,7 +104,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <>
-      {/* <TableToolBar table={table} /> */}
+      <TableToolBar />
       <ScrollArea className="h-[calc(80vh-220px)] rounded-md border">
         <Table className="relative border-collapse last:border-b">
           <TableHeader>
