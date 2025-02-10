@@ -2,13 +2,12 @@ import {
   json,
   LoaderFunction,
   MetaFunction,
-  redirect,
   SessionData,
 } from "@remix-run/node";
 import React, { useEffect } from "react";
 import { getSession } from "~/services/session";
 import { fetchData, getHeaders } from "~/lib/fetch-data";
-import { API_BASE_URL } from "~/services/authenticate";
+import { API_BASE_URL, authenticate } from "~/services/authenticate";
 import {
   useLoaderData,
   useRevalidator,
@@ -24,21 +23,21 @@ import qs from "qs";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "Manage Users - Cage System" },
+    { title: "Manage Guests - Cage System" },
     {
       property: "og:title",
-      content: "Manage Users",
+      content: "Manage Guests",
     },
     {
       name: "description",
-      content: "Betrnk Cage Manage Users",
+      content: "Betrnk Cage Manage Guests",
     },
   ];
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request.headers.get("Cookie"));
-  const user = session.get("user") as SessionData;
+  const user = await authenticate(request, session);
   const currentUrl = new URL(request.url); // Get the full URL
   const searchParams = currentUrl.searchParams; // Access query parameters
 
@@ -49,12 +48,11 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const query = qs.stringify(
     {
-      "page[number]": Number(pageNumber),
-      "page[size]": Number(pageSize),
+      "page[number]": pageNumber,
+      "page[size]": pageSize,
       sort: sort,
       "filter[q]": filter,
-      "filter[is_player]": false,
-      include: "profile,roles,junketSites",
+      include: "user.profile.avatar,agent",
     },
     {
       encode: false, // Optional: Keeps query params readable
@@ -63,7 +61,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   );
 
   const headers = getHeaders(user.access_token);
-  const url = `${API_BASE_URL}/admin/users/?${query}`;
+  const url = `${API_BASE_URL}/admin/players/?${query}`;
   const res = await fetchData(url, headers);
   const normalizedData = normalizer(res);
   const data = normalizedData?.data;
@@ -74,7 +72,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 const breadcrumbItems = [
   { title: "Dashboard", link: "/dashboard" },
-  { title: "Users", link: "/users" },
+  { title: "Guests", link: "/guests" },
 ];
 
 function route() {
@@ -89,7 +87,7 @@ function route() {
     <PageContainer>
       <div className="space-y-4">
         <Breadcrumbs items={breadcrumbItems} />
-        <Heading title="Users" description={`Total Items ${total}`} />
+        <Heading title="Guests" description={`Total Items ${total}`} />
         <DataTable columns={columns} data={data} totalItems={total} />
       </div>
     </PageContainer>

@@ -1,4 +1,4 @@
-import { Button } from '~/components/ui/button';
+import { Button } from "~/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -6,24 +6,24 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger
-} from '~/components/ui/dialog';
-import { API_BASE_URL } from '~/services/authenticate';
-import { useToast } from '~/components/ui/use-toast';
-import { LoaderIcon } from 'lucide-react';
-import { useState } from 'react';
-import axios from 'axios';
-import ErrorMessage from '~/components/shared/error-message';
-import useUserStore from '~/stores/user-store';
-import { useRevalidator } from '@remix-run/react';
-import { useUserContext } from '~/context/user-provider';
+  DialogTrigger,
+} from "~/components/ui/dialog";
+import { API_BASE_URL } from "~/services/authenticate";
+import { useToast } from "~/components/ui/use-toast";
+import { LoaderIcon } from "lucide-react";
+import { useState } from "react";
+import axios from "axios";
+import ErrorMessage from "~/components/shared/error-message";
+import useUserStore from "~/stores/user-store";
+import { useRevalidator } from "@remix-run/react";
+import { useUserContext } from "~/context/user-provider";
 
 type DialogContentType = {
   [key: string]: any;
 };
 
 export function ActionModal() {
-  const { user } = useUserContext()
+  const user = useUserContext();
   const setSheetActions = useUserStore((state) => state.setSheetActions);
   const setSelectedUser = useUserStore((state) => state.setSelectedUser);
   const sheetActions = useUserStore((state) => state.sheetActions);
@@ -31,17 +31,17 @@ export function ActionModal() {
 
   const dialogContent: DialogContentType = {
     assign_to_cashier: {
-      title: 'Assign Cashier',
-      header: '',
+      title: "Assign Cashier",
+      header: "",
       description: `Are you sure you want to assign ${selectedUser?.name} as cashier?`,
-      content: ''
-    }
+      content: "",
+    },
   };
 
   const [isLoading, setIsLoading] = useState<boolean | undefined>(false);
   const { toast } = useToast();
   const url = `${API_BASE_URL}/admin/cashiers`;
-  const revalidator = useRevalidator()
+  const revalidator = useRevalidator();
 
   async function handleConfirm() {
     setIsLoading(true);
@@ -49,39 +49,38 @@ export function ActionModal() {
       .post(
         url,
         {
-          user_id: selectedUser?.id
+          user_id: selectedUser?.id,
         },
         {
           headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
+            "Content-Type": "application/json",
+            Accept: "application/json",
             Authorization: `Bearer ${user?.access_token}`,
-          }
+          },
         }
       )
       .then((response) => {
         setSelectedUser(undefined);
         setSheetActions({ ...sheetActions, open: false });
-        revalidator.revalidate()
+        revalidator.revalidate();
 
         toast({
-          variant: 'default',
-          title: 'Success',
-          description: response?.data?.message
+          variant: "default",
+          title: "Success",
+          description: response?.data?.message,
         });
       })
       .catch((error) => {
         toast({
-          variant: 'destructive',
-          title: 'Error',
-          description: <ErrorMessage errors={error?.response?.data?.error} />
+          variant: "destructive",
+          title: "Error",
+          description: <ErrorMessage errors={error?.response?.data?.error} />,
         });
       })
       .finally(() => {
         setIsLoading(false);
       });
   }
-
 
   const handleCancel = () => {
     setSheetActions({ ...sheetActions, open: false });
@@ -91,7 +90,7 @@ export function ActionModal() {
   };
 
   const isOpen =
-    sheetActions.open && sheetActions.action === 'assign_to_cashier';
+    sheetActions.open && sheetActions.action === "assign_to_cashier";
 
   return (
     <Dialog open={isOpen}>
