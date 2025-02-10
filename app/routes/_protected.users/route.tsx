@@ -8,7 +8,7 @@ import {
 import React, { useEffect } from "react";
 import { getSession } from "~/services/session";
 import { fetchData, getHeaders } from "~/lib/fetch-data";
-import { API_BASE_URL } from "~/services/authenticate";
+import { API_BASE_URL, authenticate } from "~/services/authenticate";
 import {
   useLoaderData,
   useRevalidator,
@@ -38,7 +38,7 @@ export const meta: MetaFunction = () => {
 
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request.headers.get("Cookie"));
-  const user = session.get("user") as SessionData;
+  const user = await authenticate(request, session);
   const currentUrl = new URL(request.url); // Get the full URL
   const searchParams = currentUrl.searchParams; // Access query parameters
 
