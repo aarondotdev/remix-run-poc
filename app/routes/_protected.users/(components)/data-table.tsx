@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import {
   ColumnDef,
   PaginationState,
@@ -6,35 +6,35 @@ import {
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
-  useReactTable
-} from '@tanstack/react-table';
-import React, { useTransition } from 'react';
+  useReactTable,
+} from "@tanstack/react-table";
+import React, { useTransition } from "react";
 
-import { Button } from '~/components/ui/button';
+import { Button } from "~/components/ui/button";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue
-} from '~/components/ui/select';
+  SelectValue,
+} from "~/components/ui/select";
 import {
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
-  TableRow
-} from '~/components/ui/table';
+  TableRow,
+} from "~/components/ui/table";
 import {
   DoubleArrowLeftIcon,
-  DoubleArrowRightIcon
-} from '@radix-ui/react-icons';
-import { ChevronLeftIcon, ChevronRightIcon, LoaderIcon } from 'lucide-react';
-import { ScrollArea, ScrollBar } from '~/components/ui/scroll-area';
-import { useQueryState, parseAsInteger } from 'nuqs';
-import TableToolBar from './table-toolbar';
-import { useNuqsState } from '~/lib/search-params';
+  DoubleArrowRightIcon,
+} from "@radix-ui/react-icons";
+import { ChevronLeftIcon, ChevronRightIcon, LoaderIcon } from "lucide-react";
+import { ScrollArea, ScrollBar } from "~/components/ui/scroll-area";
+import { useQueryState, parseAsInteger } from "nuqs";
+import TableToolBar from "./table-toolbar";
+import { useNuqsState } from "~/lib/search-params";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -49,17 +49,17 @@ export function DataTable<TData, TValue>({
   columns,
   data,
   totalItems,
-  pageSizeOptions = [15, 30, 60, 100]
+  pageSizeOptions = [10, 30, 60, 100],
 }: DataTableProps<TData, TValue>) {
-
-  const [queryParams, setQueryParams] = useNuqsState()
-  const pageNumber = queryParams['page[number]']
-  const pageSize = queryParams['page[size]']
+  
+  const [queryParams, setQueryParams] = useNuqsState();
+  const pageNumber = queryParams["page[number]"];
+  const pageSize = queryParams["page[size]"];
 
   const paginationState = React.useMemo(
     () => ({
       pageIndex: pageNumber - 1,
-      pageSize: pageSize
+      pageSize: pageSize,
     }),
     [pageNumber, pageSize]
   );
@@ -71,11 +71,17 @@ export function DataTable<TData, TValue>({
         | ((old: PaginationState) => PaginationState)
     ) => {
       const pagination =
-        typeof updaterOrValue === 'function'
+        typeof updaterOrValue === "function"
           ? updaterOrValue(paginationState)
           : updaterOrValue;
-      setQueryParams({ "page[number]": pagination.pageIndex + 1 }, { shallow: false, history: "push" })
-      setQueryParams({ "page[size]": pagination.pageSize }, { shallow: false, history: "push" })
+      setQueryParams(
+        { "page[number]": pagination.pageIndex + 1 },
+        { shallow: false, history: "push" }
+      );
+      setQueryParams(
+        { "page[size]": pagination.pageSize },
+        { shallow: false, history: "push" }
+      );
     },
     [paginationState, setQueryParams]
   );
@@ -89,7 +95,7 @@ export function DataTable<TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     state: {
-      pagination: paginationState
+      pagination: paginationState,
     },
     onPaginationChange: handlePaginationChange,
     getPaginationRowModel: getPaginationRowModel(),
@@ -97,11 +103,10 @@ export function DataTable<TData, TValue>({
     manualFiltering: true,
     initialState: {
       columnVisibility: {
-        Permissions: false
-      }
-    }
+        Permissions: false,
+      },
+    },
   });
-
 
   return (
     <>
@@ -120,9 +125,9 @@ export function DataTable<TData, TValue>({
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
                     </TableHead>
                   );
                 })}
@@ -134,7 +139,7 @@ export function DataTable<TData, TValue>({
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  data-state={row.getIsSelected() && 'selected'}
+                  data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell
@@ -199,7 +204,7 @@ export function DataTable<TData, TValue>({
         </div>
         <div className="flex w-full items-center justify-between gap-2 sm:justify-end">
           <div className="flex w-[100px] items-center justify-center text-sm font-medium">
-            Page {table.getState().pagination.pageIndex + 1} of{' '}
+            Page {table.getState().pagination.pageIndex + 1} of{" "}
             {table.getPageCount()}
           </div>
           <div className="flex items-center space-x-2">

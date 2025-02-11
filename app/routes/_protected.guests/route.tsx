@@ -1,25 +1,15 @@
-import {
-  json,
-  LoaderFunction,
-  MetaFunction,
-  SessionData,
-} from "@remix-run/node";
-import React, { useEffect } from "react";
+import { json, LoaderFunction, MetaFunction } from "@remix-run/node";
 import { getSession } from "~/services/session";
 import { fetchData, getHeaders } from "~/lib/fetch-data";
 import { API_BASE_URL, authenticate } from "~/services/authenticate";
-import {
-  useLoaderData,
-  useRevalidator,
-  useSearchParams,
-} from "@remix-run/react";
+import { useLoaderData } from "@remix-run/react";
 import normalizer from "~/lib/json-normalizer";
 import PageContainer from "~/components/shared/page-container";
 import { Breadcrumbs } from "~/components/shared/breadcrumbs";
 import { Heading } from "~/components/shared/heading";
 import { columns } from "./(components)/columns";
 import { DataTable } from "./(components)/data-table";
-import qs from "qs";
+import { serialize } from "swr/_internal";
 
 export const meta: MetaFunction = () => {
   return [
@@ -38,36 +28,30 @@ export const meta: MetaFunction = () => {
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request.headers.get("Cookie"));
   const user = await authenticate(request, session);
-  const currentUrl = new URL(request.url); // Get the full URL
-  const searchParams = currentUrl.searchParams; // Access query parameters
+  const currentUrl = new URL(request.url);
+  const searchParams = currentUrl.searchParams;
 
   const pageNumber = searchParams.get("page[number]") || "1";
   const pageSize = searchParams.get("page[size]") || "15";
   const filter = searchParams.get("filter[q]") || "";
   const sort = searchParams.get("sort") || "created_at";
 
-  const query = qs.stringify(
-    {
-      "page[number]": pageNumber,
-      "page[size]": pageSize,
-      sort: sort,
-      "filter[q]": filter,
-      include: "user.profile.avatar,agent",
-    },
-    {
-      encode: false, // Optional: Keeps query params readable
-      arrayFormat: "comma", // Makes arrays compatible with APIs
-    }
-  );
+  const queryString = serialize({
+    "page[number]": pageNumber,
+    "page[size]": pageSize,
+    sort: sort,
+    "filter[q]": filter,
+    include: "user.profile.avatar,agent",
+  });
 
   const headers = getHeaders(user.access_token);
-  const url = `${API_BASE_URL}/admin/players/?${query}`;
+  const url = `${API_BASE_URL}/admin/players/?${queryString}`;
   const res = await fetchData(url, headers);
   const normalizedData = normalizer(res);
   const data = normalizedData?.data;
   const total = res.meta.total;
 
-  return json({ data, total, query });
+  return json({ data, total });
 };
 
 const breadcrumbItems = [
@@ -76,12 +60,7 @@ const breadcrumbItems = [
 ];
 
 function route() {
-  const { data, total, query } = useLoaderData<typeof loader>();
-  const revalidator = useRevalidator();
-
-  useEffect(() => {
-    revalidator.revalidate();
-  }, [query]);
+  const { data, total } = useLoaderData<typeof loader>();
 
   return (
     <PageContainer>
