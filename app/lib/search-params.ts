@@ -8,7 +8,7 @@ import {
 
 export let searchParams = {
     'page[number]': parseAsInteger.withDefault(1),
-    'page[size]': parseAsInteger.withDefault(15),
+    'page[size]': parseAsInteger.withDefault(10),
     'filter[q]': parseAsString.withDefault(''),
     'filter[name]': parseAsString.withDefault(''),
     'filter[id]': parseAsString.withDefault(''),
@@ -44,4 +44,4 @@ export function useNuqsState() {
     return useQueryStates(searchParams);
 }
 
-export let serialize = createSerializer(searchParams);
+export let serialize = createSerializer(searchParams, { clearOnDefault: false });
