@@ -51,7 +51,6 @@ export function DataTable<TData, TValue>({
   totalItems,
   pageSizeOptions = [10, 30, 60, 100],
 }: DataTableProps<TData, TValue>) {
-  
   const [queryParams, setQueryParams] = useNuqsState();
   const pageNumber = queryParams["page[number]"];
   const pageSize = queryParams["page[size]"];
@@ -160,7 +159,7 @@ export function DataTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No of results
+                  No results
                 </TableCell>
               </TableRow>
             )}

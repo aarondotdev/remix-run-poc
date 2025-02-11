@@ -1,7 +1,8 @@
 import { createContext, useContext } from "react";
 
 interface IEnv {
-    API_BASE_URL: string
+    API_BASE_URL: string,
+    
 }
 
 interface ContextType extends IEnv {

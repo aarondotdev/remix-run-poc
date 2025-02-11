@@ -22,6 +22,7 @@ import BetrnkLogoMini from "~/assets/logo/betrnk-logo-mini.png";
 import BetrnkTextLogoLight from "~/assets/logo/betrnk-logo-text-white.png";
 import BetrnkTextLogoDark from "~/assets/logo/betrnk-logo-text-black.png";
 import ThemeToggle from "./theme-toggle";
+import LanguageSwitcher from "./language-switcher";
 
 export function AppSidebar({ children }: { children: React.ReactNode }) {
   const { open } = useSidebar();
@@ -74,6 +75,7 @@ export function AppSidebar({ children }: { children: React.ReactNode }) {
           </div>
 
           <div className="flex items-center gap-1 px-4">
+            <LanguageSwitcher />
             <ThemeToggle />
             <UserNav />
           </div>

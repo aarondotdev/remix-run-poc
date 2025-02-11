@@ -19,6 +19,7 @@ import {
   useTheme,
   PreventFlashOnWrongTheme,
 } from "remix-themes";
+import RemixIntlProvider from "./context/remix-intl-provider";
 
 export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -75,12 +76,14 @@ export default function AppWithProviders() {
   useChangeLanguage(locale);
 
   return (
-    <ThemeProvider
-      specifiedTheme={theme}
-      themeAction="/action/set-theme"
-      disableTransitionOnThemeChange={true}
-    >
-      <Root />
-    </ThemeProvider>
+    <RemixIntlProvider locale={locale}>
+      <ThemeProvider
+        specifiedTheme={theme}
+        themeAction="/action/set-theme"
+        disableTransitionOnThemeChange={true}
+      >
+        <Root />
+      </ThemeProvider>
+    </RemixIntlProvider>
   );
 }
