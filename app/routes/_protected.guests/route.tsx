@@ -9,7 +9,7 @@ import { Breadcrumbs } from "~/components/shared/breadcrumbs";
 import { Heading } from "~/components/shared/heading";
 import { columns } from "./(components)/columns";
 import { DataTable } from "./(components)/data-table";
-import { serialize } from "swr/_internal";
+import { serialize } from "~/lib/search-params";
 
 export const meta: MetaFunction = () => {
   return [
@@ -31,21 +31,22 @@ export const loader: LoaderFunction = async ({ request }) => {
   const currentUrl = new URL(request.url);
   const searchParams = currentUrl.searchParams;
 
-  const pageNumber = searchParams.get("page[number]") || "1";
-  const pageSize = searchParams.get("page[size]") || "15";
+  const pageNumber = searchParams.get("page[number]") || 1;
+  const pageSize = searchParams.get("page[size]") || 10;
   const filter = searchParams.get("filter[q]") || "";
   const sort = searchParams.get("sort") || "created_at";
 
   const queryString = serialize({
-    "page[number]": pageNumber,
-    "page[size]": pageSize,
+    "page[number]": Number(pageNumber),
+    "page[size]": Number(pageSize),
     sort: sort,
     "filter[q]": filter,
     include: "user.profile.avatar,agent",
   });
 
+  console.log(queryString);
   const headers = getHeaders(user.access_token);
-  const url = `${API_BASE_URL}/admin/players/?${queryString}`;
+  const url = `${API_BASE_URL}/admin/players/${queryString}`;
   const res = await fetchData(url, headers);
   const normalizedData = normalizer(res);
   const data = normalizedData?.data;
