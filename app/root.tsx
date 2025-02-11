@@ -76,14 +76,12 @@ export default function AppWithProviders() {
   useChangeLanguage(locale);
 
   return (
-    <RemixIntlProvider locale={locale}>
-      <ThemeProvider
-        specifiedTheme={theme}
-        themeAction="/action/set-theme"
-        disableTransitionOnThemeChange={true}
-      >
-        <Root />
-      </ThemeProvider>
-    </RemixIntlProvider>
+    <ThemeProvider
+      specifiedTheme={theme}
+      themeAction="/action/set-theme"
+      disableTransitionOnThemeChange={true}
+    >
+      <Root />
+    </ThemeProvider>
   );
 }

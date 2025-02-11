@@ -33,10 +33,10 @@ export let navItems: NavGroup[] = [
     ],
   },
   {
-    group_name: "Maintenance Pages",
+    group_name: "Resources",
     group_item: [
       {
-        title: "Users Management",
+        title: "User Management",
         icon: Briefcase,
         isActive: true,
         items: [
@@ -58,11 +58,11 @@ export let navItems: NavGroup[] = [
             guard_name: "player.viewAny",
             isVisible: true,
           },
-          // {
-          //     title: 'Manage Cashiers',
-          //     url: '/manage-cashiers',
-          //     isVisible: true
-          // },
+          {
+            title: "Cashiers",
+            url: "/cashiers",
+            isVisible: true,
+          },
           // {
           //     title: 'Merchant Registration',
           //     url: '/merchant-registration',

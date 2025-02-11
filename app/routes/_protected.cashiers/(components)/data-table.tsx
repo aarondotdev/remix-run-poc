@@ -8,7 +8,7 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import React, { useTransition } from "react";
+import React from "react";
 
 import { Button } from "~/components/ui/button";
 import {

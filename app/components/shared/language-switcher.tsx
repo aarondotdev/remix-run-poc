@@ -1,5 +1,4 @@
 import { parseAsString, useQueryStates } from "nuqs";
-import { useIntlProvider } from "~/context/remix-intl-provider";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,9 +9,10 @@ import { Button } from "../ui/button";
 import US from "~/assets/icons/us.svg";
 import JP from "~/assets/icons/jp.svg";
 import KO from "~/assets/icons/ko.svg";
+import { useLocale } from "remix-i18next/react";
 
 function LanguageSwitcher() {
-  const { locale } = useIntlProvider();
+  const locale = useLocale();
 
   const [intl, setIntl] = useQueryStates(
     {
