@@ -43,14 +43,14 @@ export const loader: LoaderFunction = async ({ request }) => {
   const currentUrl = new URL(request.url); // Get the full URL
   const searchParams = currentUrl.searchParams; // Access query parameters
 
-  const pageNumber = searchParams.get("page[number]") || "1";
-  const pageSize = searchParams.get("page[size]") || "15";
+  const pageNumber = searchParams.get("page[number]") || 1
+  const pageSize = searchParams.get("page[size]") || 10
   const filter = searchParams.get("filter[q]") || "";
   const sort = searchParams.get("sort") || "created_at";
 
   const queryString = serialize({
-    "page[number]": Number(pageNumber) || 1,
-    "page[size]": Number(pageSize) || 15,
+    "page[number]": Number(pageNumber),
+    "page[size]": Number(pageSize),
     sort: sort,
     "filter[q]": filter,
     "filter[is_player]": false,

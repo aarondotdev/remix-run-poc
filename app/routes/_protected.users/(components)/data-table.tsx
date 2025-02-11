@@ -34,6 +34,7 @@ import { ChevronLeftIcon, ChevronRightIcon, LoaderIcon } from 'lucide-react';
 import { ScrollArea, ScrollBar } from '~/components/ui/scroll-area';
 import { useQueryState, parseAsInteger } from 'nuqs';
 import TableToolBar from './table-toolbar';
+import { useNuqsState } from '~/lib/search-params';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -50,16 +51,10 @@ export function DataTable<TData, TValue>({
   totalItems,
   pageSizeOptions = [15, 30, 60, 100]
 }: DataTableProps<TData, TValue>) {
-  const [pageNumber, setPageNumber] = useQueryState(
-    'page[number]',
-    parseAsInteger.withOptions({ shallow: false }).withDefault(1)
-  );
-  const [pageSize, setPageSize] = useQueryState(
-    'page[size]',
-    parseAsInteger
-      .withOptions({ shallow: false, history: 'push' })
-      .withDefault(15)
-  );
+
+  const [queryParams, setQueryParams] = useNuqsState()
+  const pageNumber = queryParams['page[number]']
+  const pageSize = queryParams['page[size]']
 
   const paginationState = React.useMemo(
     () => ({
@@ -79,11 +74,10 @@ export function DataTable<TData, TValue>({
         typeof updaterOrValue === 'function'
           ? updaterOrValue(paginationState)
           : updaterOrValue;
-      setPageNumber(pagination.pageIndex + 1);
-      setPageSize(pagination.pageSize);
-
+      setQueryParams({ "page[number]": pagination.pageIndex + 1 }, { shallow: false, history: "push" })
+      setQueryParams({ "page[size]": pagination.pageSize }, { shallow: false, history: "push" })
     },
-    [paginationState, setPageNumber, setPageSize]
+    [paginationState, setQueryParams]
   );
 
   const pageCount = Math.ceil(totalItems / pageSize);
