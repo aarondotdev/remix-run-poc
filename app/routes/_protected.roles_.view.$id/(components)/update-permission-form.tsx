@@ -5,7 +5,6 @@ import { z } from 'zod'
 import { Form, FormControl, FormField, FormItem } from '~/components/ui/form'
 import axios from 'axios'
 import { useToast } from '~/components/ui/use-toast'
-import { useRouter } from 'next/navigation'
 import { LoaderIcon } from 'lucide-react'
 import { Permission, PermissionsGroup, Role } from '~/lib/resource-types'
 import { permissionSchema, roleSchema } from '~/routes/_protected.roles_.create/(components)/create-role-form'
@@ -18,6 +17,7 @@ import RoleForm from '~/routes/_protected.roles_.create/(components)/role-form'
 import PermissionCard from '~/routes/_protected.roles_.create/(components)/permission-card'
 import { getCheckedKeys } from '~/lib/data-helpers'
 import { Card } from '~/components/ui/card'
+import { useRevalidator } from '@remix-run/react'
 
 interface IUpdatePermissionForm {
     selectedRole: Role
@@ -57,7 +57,7 @@ const UpdatePermissionForm: FC<IUpdatePermissionForm> = (props) => {
     const user = useUserContext()
     const url = `${env.API_BASE_URL}/admin/roles/${selectedRole?.id}`;
     const { toast } = useToast()
-    const router = useRouter()
+    const revalidator = useRevalidator()
     const [payload, setPayload] = useState<RoleDetails | undefined>(defaultValues)
     const checkedPermissions = selectedRole?.permissions?.map((item) => item.name)
     const defaultCheckedItems = data.reduce((acc, group) => {
@@ -97,7 +97,7 @@ const UpdatePermissionForm: FC<IUpdatePermissionForm> = (props) => {
                     variant: 'default',
                     description: 'Role successfully updated.'
                 });
-                router.refresh();
+                revalidator.revalidate()
             })
             .catch((error) => {
                 toast({

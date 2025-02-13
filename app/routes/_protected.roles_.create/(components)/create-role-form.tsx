@@ -1,5 +1,5 @@
 import { CreateRolePayload } from '~/stores/role-store';
-import React, { FC, useState } from 'react';
+import { FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Button } from '~/components/ui/button';
@@ -7,7 +7,6 @@ import { Form } from '~/components/ui/form';
 import RoleForm from './role-form';
 import PermissionForm from './permission-form';
 import axios from 'axios';
-import { useRouter } from 'next/navigation';
 import { ChevronLeftIcon, LoaderIcon } from 'lucide-react';
 import { PermissionsGroup } from '~/lib/resource-types';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -16,6 +15,8 @@ import { useUserContext } from '~/context/user-provider';
 import { useToast } from '~/components/ui/use-toast';
 import ErrorMessage from '~/components/shared/error-message';
 import { defineStepper } from '@stepperize/react';
+import { useRevalidator } from '@remix-run/react';
+import { cn } from '~/lib/utils';
 
 interface IRoleForm {
   data: PermissionsGroup[];
@@ -78,7 +79,7 @@ const CreateRoleForm2: FC<IRoleForm> = (props) => {
   const url = `${env.API_BASE_URL}/admin/roles`;
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { toast } = useToast();
-  const router = useRouter();
+  const revalidator = useRevalidator()
 
   const createAction = (payload: CreateRolePayload) => {
     setIsLoading(true);
@@ -106,7 +107,7 @@ const CreateRoleForm2: FC<IRoleForm> = (props) => {
           variant: 'default',
           description: 'Role successfully added.'
         });
-        router.refresh();
+        revalidator.revalidate()
       })
       .catch((error) => {
         toast({
@@ -125,9 +126,11 @@ const CreateRoleForm2: FC<IRoleForm> = (props) => {
   const onSubmit = (values: z.infer<typeof stepper.current.schema>) => {
     // biome-ignore lint/suspicious/noConsoleLog: <We want to log the form values>
     setPayload({ ...payload, ...(values as any) });
-    stepper.next();
     console.log(`Form values for step ${stepper.current.id}:`, values);
-    if (!stepper.isLast) return;
+    if (!stepper.isLast) {
+      stepper.next()
+      return
+    }
     createAction({ ...payload, ...(values as CreateRolePayload) });
   };
 
@@ -163,7 +166,6 @@ const CreateRoleForm2: FC<IRoleForm> = (props) => {
           {stepper.switch({
             role: () => <RoleForm form={form as any} />,
             permissions: () => <PermissionForm data={data} form={form as any} />
-            //  complete: () => <CompleteComponent />
           })}
           <div className="col-span-12 flex justify-end gap-4">
             <>
