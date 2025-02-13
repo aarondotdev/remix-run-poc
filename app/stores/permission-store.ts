@@ -1,6 +1,6 @@
-import { create } from 'zustand';
-import { createJSONStorage, persist } from 'zustand/middleware';
-import useSWR from 'swr';
+import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
+import useSWR from "swr";
 
 type PermissionStore = {
   permissions: string[];
@@ -15,7 +15,7 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 const usePermissionStore = create<
   PermissionStore,
-  [['zustand/persist', PermissionStore]]
+  [["zustand/persist", PermissionStore]]
 >(
   persist<PermissionStore>(
     (set) => ({
@@ -25,11 +25,11 @@ const usePermissionStore = create<
       setPermissions: (data: string[]) =>
         set({ permissions: data, isLoading: false }),
       setError: (error: string | null) => set({ error, isLoading: false }),
-      setLoading: (isLoading: boolean) => set({ isLoading })
+      setLoading: (isLoading: boolean) => set({ isLoading }),
     }),
     {
-      name: 'permissions-storage',
-      storage: createJSONStorage(() => sessionStorage)
+      name: "permissions-storage",
+      storage: createJSONStorage(() => sessionStorage),
     }
   )
 );
@@ -41,10 +41,10 @@ export const useFetchPermissions = () => {
     data: permissions,
     error,
     isLoading,
-    mutate
-  } = useSWR('/api/permissions', fetcher, {
+    mutate,
+  } = useSWR("/api/permissions", fetcher, {
     revalidateOnFocus: false,
-    refreshInterval: 0
+    refreshInterval: 0,
     //onSuccess: (data) => setPermissions(data?.data),
     //onError: (error) => setError(error.message)
     //onLoadingSlow: () => setLoading(true)

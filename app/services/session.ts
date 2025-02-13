@@ -2,6 +2,7 @@
 import { createCookieSessionStorage } from "@remix-run/node"; // or cloudflare/deno
 
 export type User = {
+  accessToken: any;
   id: string;
   name: string;
   email: string;
