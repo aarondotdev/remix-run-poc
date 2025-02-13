@@ -16,23 +16,6 @@ import {
 
 export let navItems: NavGroup[] = [
   {
-    group_name: "General",
-    group_item: [
-      {
-        title: "Dashboard",
-        url: "/dashboard",
-        icon: LayoutDashboardIcon,
-        isVisible: true,
-      },
-      {
-        title: "Profile",
-        url: "/profile",
-        icon: User,
-        isVisible: true,
-      },
-    ],
-  },
-  {
     group_name: "Resources",
     group_item: [
       {
