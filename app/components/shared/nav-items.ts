@@ -26,12 +26,12 @@ export let navItems: NavGroup[] = [
           {
             title: "Users",
             url: "/users",
-            guard_name: "user.viewAny",
+            guard_name: "VIEWANY_USER",
             isVisible: true,
           },
-          //   {
-          //     title: "Manage Guests",
-          //     url: "/manage-guests/view/:id",
+          // {
+          //     title: 'Manage Guests',
+          //     url: '/manage-guests/view/:id',
           //     isVisible: false,
           //     guard_name: "player.viewAny",
           //   },
@@ -68,6 +68,25 @@ export let navItems: NavGroup[] = [
             title: "Create Role",
             url: "/roles/create",
             guard_name: "role.create",
+            isVisible: true,
+          },
+        ],
+      },
+      {
+        title: "Options Management",
+        icon: Menu,
+        isActive: true,
+        items: [
+          {
+            title: "Game Types",
+            url: "/game-types",
+            guard_name: "VIEWANY_USER",
+            isVisible: true,
+          },
+          {
+            title: "Rollers",
+            url: "/rollers",
+            guard_name: "VIEWANY_USER",
             isVisible: true,
           },
         ],

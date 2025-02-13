@@ -1,4 +1,9 @@
-import { json, LoaderFunction, MetaFunction } from "@remix-run/node";
+import {
+  json,
+  LoaderFunction,
+  MetaFunction,
+  SessionData,
+} from "@remix-run/node";
 import { getSession } from "~/services/session";
 import { fetchData, getHeaders } from "~/lib/fetch-data";
 import { API_BASE_URL, authenticate } from "~/services/authenticate";
@@ -27,7 +32,7 @@ export const meta: MetaFunction = () => {
 
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request.headers.get("Cookie"));
-  const user = await authenticate(request, session);
+  const user = session.get("user") as SessionData;
   const currentUrl = new URL(request.url); // Get the full URL
   const searchParams = currentUrl.searchParams; // Access query parameters
 
