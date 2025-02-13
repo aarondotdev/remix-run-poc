@@ -26,7 +26,7 @@ export let navItems: NavGroup[] = [
           {
             title: "Users",
             url: "/users",
-            guard_name: "VIEWANY_USER",
+            guard_name: "user.viewAny",
             isVisible: true,
           },
           // {
@@ -80,13 +80,13 @@ export let navItems: NavGroup[] = [
           {
             title: "Game Types",
             url: "/game-types",
-            guard_name: "VIEWANY_USER",
+            guard_name: "gameType.viewAny",
             isVisible: true,
           },
           {
             title: "Rollers",
             url: "/rollers",
-            guard_name: "VIEWANY_USER",
+            guard_name: "roller.viewAny",
             isVisible: true,
           },
         ],
