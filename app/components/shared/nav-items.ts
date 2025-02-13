@@ -70,6 +70,25 @@ export let navItems: NavGroup[] = [
           // }
         ],
       },
+      {
+        title: "Roles Management",
+        icon: KeyRound,
+        isActive: false,
+        items: [
+          {
+            title: "Roles",
+            url: "/roles",
+            guard_name: "role.viewAny",
+            isVisible: true,
+          },
+          {
+            title: "Create Role",
+            url: "/roles/create",
+            guard_name: "role.create",
+            isVisible: true,
+          },
+        ],
+      },
     ],
   },
 ];
