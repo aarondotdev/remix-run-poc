@@ -16,23 +16,6 @@ import {
 
 export let navItems: NavGroup[] = [
   {
-    group_name: "General",
-    group_item: [
-      {
-        title: "Dashboard",
-        url: "/dashboard",
-        icon: LayoutDashboardIcon,
-        isVisible: true,
-      },
-      {
-        title: "Profile",
-        url: "/profile",
-        icon: User,
-        isVisible: true,
-      },
-    ],
-  },
-  {
     group_name: "Resources",
     group_item: [
       {
@@ -43,7 +26,7 @@ export let navItems: NavGroup[] = [
           {
             title: "Users",
             url: "/users",
-            guard_name: "VIEWANY_USER",
+            guard_name: "user.viewAny",
             isVisible: true,
           },
           // {
@@ -71,6 +54,25 @@ export let navItems: NavGroup[] = [
         ],
       },
       {
+        title: "Roles Management",
+        icon: KeyRound,
+        isActive: false,
+        items: [
+          {
+            title: "Roles",
+            url: "/roles",
+            guard_name: "role.viewAny",
+            isVisible: true,
+          },
+          {
+            title: "Create Role",
+            url: "/roles/create",
+            guard_name: "role.create",
+            isVisible: true,
+          },
+        ],
+      },
+      {
         title: "Options Management",
         icon: Menu,
         isActive: true,
@@ -78,13 +80,13 @@ export let navItems: NavGroup[] = [
           {
             title: "Game Types",
             url: "/game-types",
-            guard_name: "VIEWANY_USER",
+            guard_name: "gameType.viewAny",
             isVisible: true,
           },
           {
             title: "Rollers",
             url: "/rollers",
-            guard_name: "VIEWANY_USER",
+            guard_name: "roller.viewAny",
             isVisible: true,
           },
         ],
