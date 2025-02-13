@@ -1,26 +1,23 @@
-"use client"
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
-import { Permission, PermissionsGroup, Role } from '@/types'
-import { zodResolver } from '@hookform/resolvers/zod'
+import { Button } from '~/components/ui/button'
 import React, { FC, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { roleSchema, permissionSchema } from '../../create/create-role-form'
 import { z } from 'zod'
-import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
-import RoleForm from '../../create/role-form'
-import { API_BASE_URL } from '@/lib/helpers/fetching-helpers'
+import { Form, FormControl, FormField, FormItem } from '~/components/ui/form'
 import axios from 'axios'
-import { useLocale } from 'next-intl'
-import { useSession } from 'next-auth/react'
-import { decrypt } from '@/lib/functions/encrypt-session'
-import { useToast } from '@/components/ui/use-toast'
+import { useToast } from '~/components/ui/use-toast'
 import { useRouter } from 'next/navigation'
-import ErrorMessage from '@/components/ui/error-message'
-import { CreateRolePayload } from '@/stores/role-store'
-import PermissionCard from '../../create/permission-card'
-import { getCheckedPermissions } from '../../create/permission-form'
 import { LoaderIcon } from 'lucide-react'
+import { Permission, PermissionsGroup, Role } from '~/lib/resource-types'
+import { permissionSchema, roleSchema } from '~/routes/_protected.roles_.create/(components)/create-role-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useEnvironmentProvider } from '~/context/environment-provider'
+import { useUserContext } from '~/context/user-provider'
+import ErrorMessage from '~/components/shared/error-message'
+import { CreateRolePayload } from '~/stores/role-store'
+import RoleForm from '~/routes/_protected.roles_.create/(components)/role-form'
+import PermissionCard from '~/routes/_protected.roles_.create/(components)/permission-card'
+import { getCheckedKeys } from '~/lib/data-helpers'
+import { Card } from '~/components/ui/card'
 
 interface IUpdatePermissionForm {
     selectedRole: Role
@@ -55,10 +52,10 @@ const UpdatePermissionForm: FC<IUpdatePermissionForm> = (props) => {
         defaultValues: { ...permissionDefaultValues }
     });
 
-    const url = `${API_BASE_URL}/admin/roles/${selectedRole?.id}`;
-    const locale = useLocale()
-    const { data: session } = useSession()
-    const decryptSession = decrypt(session?.user as string)
+
+    const env = useEnvironmentProvider()
+    const user = useUserContext()
+    const url = `${env.API_BASE_URL}/admin/roles/${selectedRole?.id}`;
     const { toast } = useToast()
     const router = useRouter()
     const [payload, setPayload] = useState<RoleDetails | undefined>(defaultValues)
@@ -88,8 +85,7 @@ const UpdatePermissionForm: FC<IUpdatePermissionForm> = (props) => {
                     headers: {
                         'Content-Type': 'application/json',
                         Accept: 'application/json',
-                        Authorization: `Bearer ${decryptSession?.accessToken}`,
-                        'Accept-Language': locale
+                        Authorization: `Bearer ${user?.access_token}`,
                     }
                 }
             )
@@ -187,7 +183,7 @@ const UpdatePermissionForm: FC<IUpdatePermissionForm> = (props) => {
                                         <PermissionCard
                                             setCheckedItems={(value) => {
                                                 setCheckedItems(value);
-                                                const permissionArray = getCheckedPermissions(value);
+                                                const permissionArray = getCheckedKeys(value);
                                                 permissionForm.setValue('permissions', permissionArray, { shouldDirty: true });
                                             }}
                                             checkedItems={checkedItems as any}

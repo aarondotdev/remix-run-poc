@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { Roles } from '@/types';
+import { Roles } from '~/lib/resource-types';
 
 type RoleType = {
   name: string;
@@ -11,6 +11,12 @@ type FormModeType = {
   create?: boolean;
   edit?: boolean;
 };
+
+interface Permissions {
+  permissions: string[];
+}
+
+export type CreateRolePayload = RoleType & Permissions;
 
 type RoleStore = {
   roleFormData: RoleType | null;

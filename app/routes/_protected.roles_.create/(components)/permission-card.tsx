@@ -1,77 +1,55 @@
 import * as React from 'react';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { PermissionsGroup, Roles } from '@/types';
-import useRoleStore from '@/stores/role-store';
+import { Checkbox } from '~/components/ui/checkbox';
+import { Card, CardContent, CardHeader } from '~/components/ui/card';
+import { PermissionsGroup } from '~/lib/resource-types';
+import { useTranslation } from 'react-i18next';
 
 interface PermissionAccordionProps {
   data: PermissionsGroup;
-  currentRole: Roles;
+  checkedItems: Record<string, boolean>;
+  setCheckedItems: (value: Record<string, boolean>) => void;
 }
 
 export default function PermissionCard({
   data,
-  currentRole
+  checkedItems,
+  setCheckedItems
 }: PermissionAccordionProps) {
-  const updateCheckedPermissions = useRoleStore(
-    (state) => state.updateCheckedPermissions
-  );
-  const setUpdateCheckedPermissions = useRoleStore(
-    (state) => state.setUpdateCheckedPermissions
-  );
   const [selectAll, setSelectAll] = React.useState<boolean>(false);
 
   React.useEffect(() => {
-    if (Object.keys(updateCheckedPermissions).length === 0) {
-      const defaultPermissions = currentRole.permissions.reduce(
-        (acc, permission) => ({
-          ...acc,
-          [permission.name]: true
-        }),
-        {}
-      );
-      setUpdateCheckedPermissions(defaultPermissions);
-    }
-  }, [
-    currentRole.permissions,
-    setUpdateCheckedPermissions,
-    updateCheckedPermissions
-  ]);
-
-  React.useEffect(() => {
     const allChecked = data.permissions.every(
-      (permission) => updateCheckedPermissions[permission.name]
+      (permission) => checkedItems[permission.name]
     );
     setSelectAll(allChecked);
-  }, [updateCheckedPermissions, data.permissions]);
+  }, [checkedItems, data.permissions]);
 
   const handleSelectAll = (checked: boolean) => {
     setSelectAll(checked);
-    const newupdateCheckedPermissions: Record<string, boolean> = {};
+    const newCheckedPermissions: Record<string, boolean> = {};
     data.permissions.forEach((permission) => {
-      newupdateCheckedPermissions[permission.name] = checked;
+      newCheckedPermissions[permission.name] = checked;
     });
-    setUpdateCheckedPermissions({
-      ...updateCheckedPermissions,
-      ...newupdateCheckedPermissions
-    });
+    setCheckedItems({ ...checkedItems, ...newCheckedPermissions });
   };
 
   const handlePermissionChange = (permissionName: string, checked: boolean) => {
-    const newupdateCheckedPermissions = {
-      ...updateCheckedPermissions,
+    const newCheckedPermissions = {
+      ...checkedItems,
       [permissionName]: checked
     };
-    setUpdateCheckedPermissions(newupdateCheckedPermissions);
+    setCheckedItems(newCheckedPermissions);
 
     const allChecked = data.permissions.every(
-      (permission) => newupdateCheckedPermissions[permission.name]
+      (permission) => newCheckedPermissions[permission.name]
     );
     setSelectAll(allChecked);
   };
 
+  const { t } = useTranslation();
+
   return (
-    <Card className="w-full rounded-sm p-6">
+    <Card className="h-full w-full rounded-sm p-6">
       <CardHeader className="p-0 font-semibold">{data?.title}</CardHeader>
       <CardContent className="p-0">
         <p className="mb-4 text-sm text-muted-foreground">
@@ -88,18 +66,18 @@ export default function PermissionCard({
               htmlFor="select-all"
               className="text-sm font-medium leading-none text-primary peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
-              Select all
+              {t('label_select_all')}
             </label>
           </div>
           <div className="grid grid-cols-2 gap-4">
-            {data?.permissions?.map((permission) => (
+            {data?.permissions?.map((permission, index) => (
               <div
-                key={permission?.name}
+                key={permission?.name + index}
                 className="flex items-center space-x-2"
               >
                 <Checkbox
                   id={permission?.name}
-                  checked={updateCheckedPermissions[permission?.name] || false}
+                  checked={checkedItems[permission?.name] || false}
                   onCheckedChange={(checked) =>
                     handlePermissionChange(permission.name, checked as boolean)
                   }

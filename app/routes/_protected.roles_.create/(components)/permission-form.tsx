@@ -1,28 +1,25 @@
-import React, { FC, useState } from "react";
-import { UseFormReturn } from "react-hook-form";
+import React, { FC, useState } from 'react';
+import { permissionValues } from './create-role-form';
+import { UseFormReturn } from 'react-hook-form';
+import PermissionCard from './permission-card';
 import {
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
-} from "~/components/ui/form";
+  FormMessage
+} from '~/components/ui/form';
+import { PermissionsGroup } from '~/lib/resource-types';
+import { getCheckedKeys } from '~/lib/data-helpers';
 
 interface IPermissionForm {
   data: PermissionsGroup[];
   form: UseFormReturn<permissionValues>;
-  checkedItems: Record<string, boolean>;
-  setCheckedItems: (value: Record<string, boolean>) => void;
 }
 
-export const getCheckedPermissions = (permissions: {
-  [key: string]: boolean;
-}): string[] => {
-  return Object.keys(permissions).filter((key) => permissions[key]);
-};
-
 const PermissionForm: FC<IPermissionForm> = (props) => {
-  const { data, form, checkedItems, setCheckedItems } = props;
+  const { data, form } = props;
+  const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
 
   return (
     <div className="col-span-12 grid grid-cols-[repeat(auto-fill,minmax(400px,1fr))] gap-4">
@@ -37,8 +34,8 @@ const PermissionForm: FC<IPermissionForm> = (props) => {
                 <PermissionCard
                   setCheckedItems={(value) => {
                     setCheckedItems(value);
-                    const permissionArray = getCheckedPermissions(value);
-                    form.setValue("permissions", permissionArray);
+                    const permissionArray = getCheckedKeys(value);
+                    form.setValue('permissions', permissionArray);
                   }}
                   checkedItems={checkedItems as any}
                   data={item}

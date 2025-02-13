@@ -45,9 +45,8 @@ export function normalizeRoleData(response) {
   return normalizedRole;
 }
 
-export const getCheckedKeys = (data) => {
-  if (!data || typeof data !== "object") {
-    return []; // Return an empty array if data is null, undefined, or not an object
-  }
-  return Object.keys(data).filter((key) => data[key] === true);
+export const getCheckedKeys = (permissions: {
+  [key: string]: boolean;
+}): string[] => {
+  return Object.keys(permissions).filter((key) => permissions[key]);
 };
