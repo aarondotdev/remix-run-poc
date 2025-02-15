@@ -6,7 +6,7 @@ import { commitSession, getSession } from "~/services/session";
 export const loader: LoaderFunction = async ({ request }) => {
     try {
         // Authenticate user using Remix Auth (this handles OAuth callback)
-        const { data: tokens } = await authenticator.authenticate("cage-oauth", request);
+        const { data: tokens } = await authenticator.authenticate("betrnk-oauth", request);
 
         // Get current session
         const session = await getSession(request.headers.get("Cookie"));

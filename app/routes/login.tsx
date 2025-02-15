@@ -31,7 +31,7 @@ export let loader: LoaderFunction = async ({ request }) => {
 };
 
 export let action: ActionFunction = async ({ request }) => {
-  let user = await authenticator.authenticate("cage-oauth", request);
+  let user = await authenticator.authenticate("betrnk-oauth", request);
   if (user) return redirect("/dashboard");
 };
 
