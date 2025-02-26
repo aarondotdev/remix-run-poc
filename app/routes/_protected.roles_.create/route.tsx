@@ -1,13 +1,13 @@
-import { getSession } from "~/services/session";
-import { fetchData, getHeaders } from "~/lib/fetch-data";
-import { API_BASE_URL, authenticate } from "~/services/authenticate";
-import PageContainer from "~/components/shared/page-container";
-import { Breadcrumbs } from "~/components/shared/breadcrumbs";
-import { Heading } from "~/components/shared/heading";
+import { getSession } from "@/services/session";
+import { fetchData, getHeaders } from "@/lib/fetch-data";
+import { API_BASE_URL, authenticate } from "@/services/authenticate";
+import PageContainer from "@/components/shared/page-container";
+import { Breadcrumbs } from "@/components/shared/breadcrumbs";
+import { Heading } from "@/components/shared/heading";
 import { json, LoaderFunction, MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { PermissionsGroup } from "~/lib/resource-types";
-import { normalizeRolesWithPermissionsData } from "~/lib/data-helpers";
+import { PermissionsGroup } from "@/lib/resource-types";
+import { normalizeRolesWithPermissionsData } from "@/lib/data-helpers";
 import CreateRoleForm from "./(components)/create-role-form";
 
 export const meta: MetaFunction = () => {

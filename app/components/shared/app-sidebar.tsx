@@ -11,16 +11,16 @@ import {
   SidebarRail,
   SidebarTrigger,
   useSidebar,
-} from "~/components/ui/sidebar";
+} from "@/components/ui/sidebar";
 import { Link } from "@remix-run/react";
-import { Separator } from "~/components/ui/separator";
+import { Separator } from "@/components/ui/separator";
 import { NavMain } from "./nav-main";
 import { navItems } from "./nav-items";
 import { UserNav } from "./user-nav";
-import { cn } from "~/lib/utils";
-import BetrnkLogoMini from "~/assets/logo/betrnk-logo-mini.png";
-import BetrnkTextLogoLight from "~/assets/logo/betrnk-logo-text-white.png";
-import BetrnkTextLogoDark from "~/assets/logo/betrnk-logo-text-black.png";
+import { cn } from "@/lib/utils";
+import BetrnkLogoMini from "@/assets/logo/betrnk-logo-mini.png";
+import BetrnkTextLogoLight from "@/assets/logo/betrnk-logo-text-white.png";
+import BetrnkTextLogoDark from "@/assets/logo/betrnk-logo-text-black.png";
 import ThemeToggle from "./theme-toggle";
 import LanguageSwitcher from "./language-switcher";
 

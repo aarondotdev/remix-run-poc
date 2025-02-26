@@ -4,9 +4,9 @@ import { CellAction } from "./cell-action";
 // import IsActiveBadge from "@/components/is-active-badge";
 // import { Switch } from "@/components/ui/switch";
 import { useTranslation } from "react-i18next";
-import { GameType } from "~/lib/resource-types";
-import { useFetchPermissions } from "~/stores/permission-store";
-import useGameTypeStore from "~/stores/game-type-store";
+import { GameType } from "@/lib/resource-types";
+import { useFetchPermissions } from "@/stores/permission-store";
+import useGameTypeStore from "@/stores/game-type-store";
 
 export const columns: ColumnDef<GameType>[] = [
   {

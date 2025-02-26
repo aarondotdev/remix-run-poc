@@ -10,14 +10,14 @@ import {
 } from "@tanstack/react-table";
 import React, { useTransition } from "react";
 
-import { Button } from "~/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "~/components/ui/select";
+} from "@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -25,13 +25,13 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "~/components/ui/table";
+} from "@/components/ui/table";
 import {
   DoubleArrowLeftIcon,
   DoubleArrowRightIcon,
 } from "@radix-ui/react-icons";
 import { ChevronLeftIcon, ChevronRightIcon, LoaderIcon } from "lucide-react";
-import { ScrollArea, ScrollBar } from "~/components/ui/scroll-area";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { useQueryState, parseAsInteger } from "nuqs";
 import TableToolBar from "./table-toolbar";
 import { useTranslation } from "react-i18next";

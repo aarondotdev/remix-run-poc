@@ -4,12 +4,12 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from "~/components/ui/sheet";
-import { Button } from "~/components/ui/button";
+} from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import CreateUserForm from "./create-user-form";
 import UpdateUserForm from "./update-user-form";
-import useUserStore from "~/stores/user-store";
+import useUserStore from "@/stores/user-store";
 
 function UserSheet() {
   type SheetContentType = {

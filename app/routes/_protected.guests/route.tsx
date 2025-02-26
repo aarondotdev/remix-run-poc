@@ -1,15 +1,15 @@
 import { json, LoaderFunction, MetaFunction } from "@remix-run/node";
-import { getSession } from "~/services/session";
-import { fetchData, getHeaders } from "~/lib/fetch-data";
-import { API_BASE_URL, authenticate } from "~/services/authenticate";
+import { getSession } from "@/services/session";
+import { fetchData, getHeaders } from "@/lib/fetch-data";
+import { API_BASE_URL, authenticate } from "@/services/authenticate";
 import { useLoaderData } from "@remix-run/react";
-import normalizer from "~/lib/json-normalizer";
-import PageContainer from "~/components/shared/page-container";
-import { Breadcrumbs } from "~/components/shared/breadcrumbs";
-import { Heading } from "~/components/shared/heading";
+import normalizer from "@/lib/json-normalizer";
+import PageContainer from "@/components/shared/page-container";
+import { Breadcrumbs } from "@/components/shared/breadcrumbs";
+import { Heading } from "@/components/shared/heading";
 import { columns } from "./(components)/columns";
 import { DataTable } from "./(components)/data-table";
-import { serialize } from "~/lib/search-params";
+import { serialize } from "@/lib/search-params";
 
 export const meta: MetaFunction = () => {
   return [

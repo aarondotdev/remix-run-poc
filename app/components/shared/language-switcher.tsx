@@ -6,9 +6,9 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
-import US from "~/assets/icons/us.svg";
-import JP from "~/assets/icons/jp.svg";
-import KO from "~/assets/icons/ko.svg";
+import US from "@/assets/icons/us.svg";
+import JP from "@/assets/icons/jp.svg";
+import KO from "@/assets/icons/ko.svg";
 import { useLocale } from "remix-i18next/react";
 
 function LanguageSwitcher() {

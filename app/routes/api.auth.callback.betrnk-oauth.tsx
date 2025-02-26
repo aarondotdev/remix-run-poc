@@ -1,6 +1,6 @@
 import { LoaderFunction, redirect } from "@remix-run/node";
-import { authenticator, getUser } from "~/services/auth";
-import { commitSession, getSession } from "~/services/session";
+import { authenticator, getUser } from "@/services/auth";
+import { commitSession, getSession } from "@/services/session";
 
 export const loader: LoaderFunction = async ({ request }) => {
   try {

@@ -6,7 +6,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "~/components/ui/form";
+} from "@/components/ui/form";
 
 interface IPermissionForm {
   data: PermissionsGroup[];

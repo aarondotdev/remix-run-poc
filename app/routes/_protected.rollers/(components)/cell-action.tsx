@@ -1,29 +1,29 @@
 "use client";
-import { Button } from "~/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from "~/components/ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 import { Calendar, Edit, EyeIcon, MoreHorizontal, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useToast } from "~/components/ui/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 
 import axios from "axios";
 
 import { useTranslation } from "react-i18next";
 import { useLocale } from "remix-i18next/react";
-import { useFetchPermissions } from "~/stores/permission-store";
-import { Roller } from "~/lib/resource-types";
-import ErrorMessage from "~/components/shared/error-message";
-import { useUserContext } from "~/context/user-provider";
-import useRollerStore from "~/stores/roller-store";
+import { useFetchPermissions } from "@/stores/permission-store";
+import { Roller } from "@/lib/resource-types";
+import ErrorMessage from "@/components/shared/error-message";
+import { useUserContext } from "@/context/user-provider";
+import useRollerStore from "@/stores/roller-store";
 import { useRevalidator } from "@remix-run/react";
-import { useEnvironmentProvider } from "~/context/environment-provider";
-import { AlertModal } from "~/components/shared/alert-modal";
+import { useEnvironmentProvider } from "@/context/environment-provider";
+import { AlertModal } from "@/components/shared/alert-modal";
 
 interface CellActionProps {
   data: Roller;

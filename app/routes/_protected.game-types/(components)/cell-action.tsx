@@ -1,27 +1,27 @@
-import { Button } from "~/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from "~/components/ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 import { Calendar, Edit, EyeIcon, MoreHorizontal, Trash } from "lucide-react";
 import { useNavigate } from "@remix-run/react";
 import { useState } from "react";
-import { useToast } from "~/components/ui/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
-import { AlertModal } from "~/components/shared/alert-modal";
-import { GameType } from "~/lib/resource-types";
-import { API_BASE_URL } from "~/services/authenticate";
-import ErrorMessage from "~/components/shared/error-message";
+import { AlertModal } from "@/components/shared/alert-modal";
+import { GameType } from "@/lib/resource-types";
+import { API_BASE_URL } from "@/services/authenticate";
+import ErrorMessage from "@/components/shared/error-message";
 import { useRevalidator } from "@remix-run/react";
-import { useUserContext } from "~/context/user-provider";
-import useGameTypeStore from "~/stores/game-type-store";
-import { useFetchPermissions } from "~/stores/permission-store";
+import { useUserContext } from "@/context/user-provider";
+import useGameTypeStore from "@/stores/game-type-store";
+import { useFetchPermissions } from "@/stores/permission-store";
 import { useLocale } from "remix-i18next/react";
-import { useEnvironmentProvider } from "~/context/environment-provider";
+import { useEnvironmentProvider } from "@/context/environment-provider";
 
 interface CellActionProps {
   data: GameType;

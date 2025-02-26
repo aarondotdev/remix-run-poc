@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { Roles } from '~/lib/resource-types';
+import { Roles } from '@/lib/resource-types';
 
 type RoleType = {
   name: string;

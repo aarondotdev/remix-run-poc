@@ -5,15 +5,15 @@ import {
   ShouldRevalidateFunction,
   useLoaderData,
 } from "@remix-run/react";
-import { SidebarProvider } from "~/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import { json, LoaderFunction, redirect } from "@remix-run/node";
-import { getPermissions, getUser } from "~/services/auth";
-import { getSession } from "~/services/session";
+import { getPermissions, getUser } from "@/services/auth";
+import { getSession } from "@/services/session";
 import { NuqsAdapter } from "nuqs/adapters/remix";
-import UserProvider from "~/context/user-provider";
-import { API_BASE_URL, authenticate } from "~/services/authenticate";
-import EnvironmentProvider from "~/context/environment-provider";
-import { Toaster } from "~/components/ui/toaster";
+import UserProvider from "@/context/user-provider";
+import { API_BASE_URL, authenticate } from "@/services/authenticate";
+import EnvironmentProvider from "@/context/environment-provider";
+import { Toaster } from "@/components/ui/toaster";
 
 // export const shouldRevalidate: ShouldRevalidateFunction = ({
 //   currentUrl,

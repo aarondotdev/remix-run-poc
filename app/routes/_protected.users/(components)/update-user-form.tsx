@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { Button, buttonVariants } from "~/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -12,14 +12,14 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "~/components/ui/form";
-import { Input } from "~/components/ui/input";
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { Fragment, useState } from "react";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "~/components/ui/popover";
+} from "@/components/ui/popover";
 import { CrossCircledIcon, PlusCircledIcon } from "@radix-ui/react-icons";
 import {
   Command,
@@ -29,21 +29,21 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-} from "~/components/ui/command";
-import { cn } from "~/lib/utils";
+} from "@/components/ui/command";
+import { cn } from "@/lib/utils";
 import { Check, InfoIcon, LoaderIcon } from "lucide-react";
-import { useToast } from "~/components/ui/use-toast";
-import { ScrollArea, ScrollBar } from "~/components/ui/scroll-area";
-import useUserStore from "~/stores/user-store";
+import { useToast } from "@/components/ui/use-toast";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import useUserStore from "@/stores/user-store";
 import axios from "axios";
-import ErrorMessage from "~/components/shared/error-message";
+import ErrorMessage from "@/components/shared/error-message";
 import SelectedRoles from "./selected-roles";
 import SelectedJunkets from "./selected-junkets";
-import { Alert, AlertDescription } from "~/components/ui/alert";
-import { useUserContext } from "~/context/user-provider";
-import { useEnvironmentProvider } from "~/context/environment-provider";
-import { useLookupFetcher } from "~/lib/lookup-fetcher";
-import { Junket, Role } from "~/lib/resource-types";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useUserContext } from "@/context/user-provider";
+import { useEnvironmentProvider } from "@/context/environment-provider";
+import { useLookupFetcher } from "@/lib/lookup-fetcher";
+import { Junket, Role } from "@/lib/resource-types";
 import { useRevalidator } from "@remix-run/react";
 
 const formSchema = z.object({

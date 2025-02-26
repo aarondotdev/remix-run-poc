@@ -1,21 +1,21 @@
-import { Button } from "~/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from "~/components/ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 import { Edit, MoreHorizontal, Trash } from "lucide-react";
 import { useState } from "react";
-import { useToast } from "~/components/ui/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 import axios from "axios";
-import { Cashier } from "~/lib/resource-types";
-import { useEnvironmentProvider } from "~/context/environment-provider";
-import useCashierStore from "~/stores/cashier-store";
-import { useUserContext } from "~/context/user-provider";
-import { ErrorMessage } from "~/components/shared/error-message";
-import { AlertModal } from "~/components/shared/alert-modal";
+import { Cashier } from "@/lib/resource-types";
+import { useEnvironmentProvider } from "@/context/environment-provider";
+import useCashierStore from "@/stores/cashier-store";
+import { useUserContext } from "@/context/user-provider";
+import { ErrorMessage } from "@/components/shared/error-message";
+import { AlertModal } from "@/components/shared/alert-modal";
 import { useRevalidator } from "@remix-run/react";
 
 interface CellActionProps {

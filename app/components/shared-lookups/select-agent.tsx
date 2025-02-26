@@ -1,4 +1,4 @@
-import { Button } from "~/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Command,
   CommandEmpty,
@@ -6,26 +6,26 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "~/components/ui/command";
-import { FormControl } from "~/components/ui/form";
+} from "@/components/ui/command";
+import { FormControl } from "@/components/ui/form";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "~/components/ui/popover";
+} from "@/components/ui/popover";
 import { CaretSortIcon } from "@radix-ui/react-icons";
 import { Check, LoaderIcon } from "lucide-react";
 import React, { FC, useCallback, useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import useSWRInfinite from "swr/infinite";
 import { useDebouncedCallback } from "use-debounce";
-import { Agent } from "~/lib/resource-types";
-import { useUserContext } from "~/context/user-provider";
-import { fetchData, getHeaders } from "~/lib/fetch-data";
-import normalizer from "~/lib/json-normalizer";
-import { useEnvironmentProvider } from "~/context/environment-provider";
+import { Agent } from "@/lib/resource-types";
+import { useUserContext } from "@/context/user-provider";
+import { fetchData, getHeaders } from "@/lib/fetch-data";
+import normalizer from "@/lib/json-normalizer";
+import { useEnvironmentProvider } from "@/context/environment-provider";
 import qs from "qs";
-import { cn } from "~/lib/utils";
+import { cn } from "@/lib/utils";
 
 interface IDynamicComboBox {
   identifier?: "code" | "id";

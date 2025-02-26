@@ -2,7 +2,7 @@
 import { type FC } from 'react';
 
 // Types
-import { Badge } from '~/components/ui/badge';
+import { Badge } from '@/components/ui/badge';
 import { CrossCircledIcon } from '@radix-ui/react-icons';
 
 export interface Role {

@@ -1,4 +1,4 @@
-import { NavGroup } from "~/lib/resource-types";
+import { NavGroup } from "@/lib/resource-types";
 import {
   Briefcase,
   File,

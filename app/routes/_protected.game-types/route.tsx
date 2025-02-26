@@ -3,20 +3,20 @@ import { columns } from "./(components)/columns";
 import { Metadata } from "next";
 import { DataTable } from "./(components)/data-table";
 import { useTranslation } from "react-i18next";
-import { Breadcrumbs } from "~/components/shared/breadcrumbs";
-import PageContainer from "~/components/shared/page-container";
-import { fetchData, getHeaders } from "~/lib/fetch-data";
-import normalizer from "~/lib/json-normalizer";
+import { Breadcrumbs } from "@/components/shared/breadcrumbs";
+import PageContainer from "@/components/shared/page-container";
+import { fetchData, getHeaders } from "@/lib/fetch-data";
+import normalizer from "@/lib/json-normalizer";
 import {
   useLoaderData,
   useRevalidator,
   useSearchParams,
 } from "@remix-run/react";
 import { json, LoaderFunction, SessionData } from "@remix-run/node";
-import { getSession } from "~/services/session";
-import { API_BASE_URL, authenticate } from "~/services/authenticate";
-import { serialize } from "~/lib/search-params";
-import { Heading } from "~/components/shared/heading";
+import { getSession } from "@/services/session";
+import { API_BASE_URL, authenticate } from "@/services/authenticate";
+import { serialize } from "@/lib/search-params";
+import { Heading } from "@/components/shared/heading";
 
 export const metadata: Metadata = {
   title: "Manage Game Types - Cage System",

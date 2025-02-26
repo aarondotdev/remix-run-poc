@@ -9,14 +9,14 @@ import {
 } from "@tanstack/react-table";
 import React from "react";
 
-import { Button } from "~/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "~/components/ui/select";
+} from "@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -24,15 +24,15 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "~/components/ui/table";
+} from "@/components/ui/table";
 import {
   DoubleArrowLeftIcon,
   DoubleArrowRightIcon,
 } from "@radix-ui/react-icons";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
-import { ScrollArea, ScrollBar } from "~/components/ui/scroll-area";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import TableToolBar from "./table-toolbar";
-import { useNuqsState } from "~/lib/search-params";
+import { useNuqsState } from "@/lib/search-params";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];

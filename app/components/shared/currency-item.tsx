@@ -1,7 +1,7 @@
-import { cn, createInitials } from "~/lib/utils";
+import { cn, createInitials } from "@/lib/utils";
 import { FC } from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
-import { Currency } from "~/lib/resource-types";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Currency } from "@/lib/resource-types";
 
 interface CurrencyItemProps {
   currency: Currency;

@@ -1,22 +1,22 @@
-import { CreateRolePayload } from '~/stores/role-store';
+import { CreateRolePayload } from '@/stores/role-store';
 import { FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { Button } from '~/components/ui/button';
-import { Form } from '~/components/ui/form';
+import { Button } from '@/components/ui/button';
+import { Form } from '@/components/ui/form';
 import RoleForm from './role-form';
 import PermissionForm from './permission-form';
 import axios from 'axios';
 import { ChevronLeftIcon, LoaderIcon } from 'lucide-react';
-import { PermissionsGroup } from '~/lib/resource-types';
+import { PermissionsGroup } from '@/lib/resource-types';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useEnvironmentProvider } from '~/context/environment-provider';
-import { useUserContext } from '~/context/user-provider';
-import { useToast } from '~/components/ui/use-toast';
-import ErrorMessage from '~/components/shared/error-message';
+import { useEnvironmentProvider } from '@/context/environment-provider';
+import { useUserContext } from '@/context/user-provider';
+import { useToast } from '@/components/ui/use-toast';
+import ErrorMessage from '@/components/shared/error-message';
 import { defineStepper } from '@stepperize/react';
 import { useRevalidator } from '@remix-run/react';
-import { cn } from '~/lib/utils';
+import { cn } from '@/lib/utils';
 
 interface IRoleForm {
   data: PermissionsGroup[];

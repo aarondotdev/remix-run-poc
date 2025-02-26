@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "~/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -12,27 +12,27 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "~/components/ui/form";
-import { Input } from "~/components/ui/input";
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { Fragment, useEffect, useState, useTransition } from "react";
 import { LoaderIcon } from "lucide-react";
 
-import { useToast } from "~/components/ui/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
-import { ScrollArea } from "~/components/ui/scroll-area";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 import axios from "axios";
 
 import { useTranslation } from "react-i18next";
 // import { Switch } from '@/components/ui/switch';
-import useGameTypeStore from "~/stores/game-type-store";
-import { SessionType } from "~/lib/resource-types";
-import { API_BASE_URL } from "~/services/authenticate";
-import ErrorMessage from "~/components/shared/error-message";
-import { useUserContext } from "~/context/user-provider";
+import useGameTypeStore from "@/stores/game-type-store";
+import { SessionType } from "@/lib/resource-types";
+import { API_BASE_URL } from "@/services/authenticate";
+import ErrorMessage from "@/components/shared/error-message";
+import { useUserContext } from "@/context/user-provider";
 import { useRevalidator } from "@remix-run/react";
 import { useLocale } from "remix-i18next/react";
-import { useEnvironmentProvider } from "~/context/environment-provider";
+import { useEnvironmentProvider } from "@/context/environment-provider";
 
 const formSchema = z.object({
   name: z.string(),

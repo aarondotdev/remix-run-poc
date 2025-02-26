@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "~/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -10,19 +10,19 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "~/components/ui/form";
+} from "@/components/ui/form";
 import { Fragment, useState } from "react";
 import { LoaderIcon } from "lucide-react";
-import { useToast } from "~/components/ui/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 import axios from "axios";
-import ErrorMessage from "~/components/shared/error-message";
-import { ScrollArea } from "~/components/ui/scroll-area";
-import useCashierStore from "~/stores/cashier-store";
-import { useEnvironmentProvider } from "~/context/environment-provider";
-import { useUserContext } from "~/context/user-provider";
+import ErrorMessage from "@/components/shared/error-message";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import useCashierStore from "@/stores/cashier-store";
+import { useEnvironmentProvider } from "@/context/environment-provider";
+import { useUserContext } from "@/context/user-provider";
 import { useRevalidator } from "@remix-run/react";
-import { User } from "~/lib/resource-types";
-import SelectUser from "~/components/shared-lookups/select-user";
+import { User } from "@/lib/resource-types";
+import SelectUser from "@/components/shared-lookups/select-user";
 
 const formSchema = z.object({
   user_id: z.string(),

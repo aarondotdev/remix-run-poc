@@ -1,5 +1,5 @@
-import { Input } from '~/components/ui/input';
-import { cn } from '~/lib/utils';
+import { Input } from '@/components/ui/input';
+import { cn } from '@/lib/utils';
 import { LoaderIcon } from 'lucide-react';
 import { useEffect, useState, useTransition } from 'react';
 import { useDebouncedCallback } from 'use-debounce';

@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import { SessionData } from "~/services/session";
+import { SessionData } from "@/services/session";
 
 interface ContextType extends SessionData {
   children: React.ReactNode;

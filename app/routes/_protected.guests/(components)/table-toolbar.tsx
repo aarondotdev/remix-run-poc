@@ -1,8 +1,8 @@
-import { DataTableSearch } from "~/components/ui/data-table/search";
+import { DataTableSearch } from "@/components/ui/data-table/search";
 import { useTableFilter } from "./table-filters";
-import { Button } from "~/components/ui/button";
-import { useUserContext } from "~/context/user-provider";
-import useGuestStore from "~/stores/guests-store";
+import { Button } from "@/components/ui/button";
+import { useUserContext } from "@/context/user-provider";
+import useGuestStore from "@/stores/guests-store";
 import GuestSheet from "./guest-sheet";
 import { AssignAgentModal } from "./assign-agent-modal";
 

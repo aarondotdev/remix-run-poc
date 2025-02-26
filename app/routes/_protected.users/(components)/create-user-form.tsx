@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { Button } from '~/components/ui/button';
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -10,15 +10,15 @@ import {
   FormItem,
   FormLabel,
   FormMessage
-} from '~/components/ui/form';
-import { Input } from '~/components/ui/input';
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 import { Fragment, useState } from 'react';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger
-} from '~/components/ui/popover';
-import { cn } from '~/lib/utils';
+} from '@/components/ui/popover';
+import { cn } from '@/lib/utils';
 import {
   CommandInput,
   CommandList,
@@ -26,21 +26,21 @@ import {
   CommandGroup,
   CommandItem,
   Command
-} from '~/components/ui/command';
+} from '@/components/ui/command';
 import { Check, LoaderIcon } from 'lucide-react';
-import { useToast } from '~/components/ui/use-toast';
+import { useToast } from '@/components/ui/use-toast';
 import axios from 'axios';
-import ErrorMessage from '~/components/shared/error-message';
+import ErrorMessage from '@/components/shared/error-message';
 import SelectedRoles from './selected-roles';
 import { Role } from './selected-roles';
 import SelectedJunkets, { Junket } from './selected-junkets';
-import useUserStore from '~/stores/user-store';
-import { ScrollArea } from '~/components/ui/scroll-area';
-import { useUserContext } from '~/context/user-provider';
-import { useLookupFetcher } from '~/lib/lookup-fetcher';
+import useUserStore from '@/stores/user-store';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { useUserContext } from '@/context/user-provider';
+import { useLookupFetcher } from '@/lib/lookup-fetcher';
 import { useRevalidator } from '@remix-run/react';
 import { PlusCircledIcon } from '@radix-ui/react-icons';
-import { useEnvironmentProvider } from '~/context/environment-provider';
+import { useEnvironmentProvider } from '@/context/environment-provider';
 
 const formSchema = z.object({
   name: z.string().min(2, {

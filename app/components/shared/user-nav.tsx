@@ -1,7 +1,7 @@
 "use client";
 import { Form, Link, useSubmit } from "@remix-run/react";
 import { useState } from "react";
-import { Button } from "~/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,10 +11,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "~/components/ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { UserIcon } from "lucide-react";
-import { useUserContext } from "~/context/user-provider";
+import { useUserContext } from "@/context/user-provider";
 
 export function UserNav() {
   const [isLoading, setIsLoading] = useState(false);

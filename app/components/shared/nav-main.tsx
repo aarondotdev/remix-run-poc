@@ -6,7 +6,7 @@ import {
     Collapsible,
     CollapsibleContent,
     CollapsibleTrigger
-} from '~/components/ui/collapsible';
+} from '@/components/ui/collapsible';
 import {
     SidebarGroup,
     SidebarGroupLabel,
@@ -16,20 +16,20 @@ import {
     SidebarMenuSub,
     SidebarMenuSubButton,
     SidebarMenuSubItem
-} from '~/components/ui/sidebar';
-import { useSidebar } from '~/components/ui/sidebar';
+} from '@/components/ui/sidebar';
+import { useSidebar } from '@/components/ui/sidebar';
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuLabel,
     DropdownMenuTrigger
-} from '~/components/ui/dropdown-menu';
+} from '@/components/ui/dropdown-menu';
 import { Fragment } from 'react';
 
-import { cn } from '~/lib/utils';
+import { cn } from '@/lib/utils';
 import { Link, useLocation } from '@remix-run/react';
-import { NavGroup } from '~/lib/resource-types';
+import { NavGroup } from '@/lib/resource-types';
 
 export function NavMain({ navItems }: { navItems: NavGroup[] | null }) {
     const location = useLocation();

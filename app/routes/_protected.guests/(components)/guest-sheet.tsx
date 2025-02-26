@@ -4,14 +4,14 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from "~/components/ui/sheet";
-import { Button } from "~/components/ui/button";
+} from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
 import { Cross2Icon } from "@radix-ui/react-icons";
-import useGuestStore from "~/stores/guests-store";
+import useGuestStore from "@/stores/guests-store";
 import CreateGuestForm from "./create-guest-form";
 import UpdateGuestForm from "./update-guest-form";
 import CreateWalletForm from "./create-wallet-form";
-import { cn } from "~/lib/utils";
+import { cn } from "@/lib/utils";
 
 type SheetContentType = {
   [key: string]: any;

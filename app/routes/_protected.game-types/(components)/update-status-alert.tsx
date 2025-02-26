@@ -1,18 +1,18 @@
 "use client";
-import { Button } from "~/components/ui/button";
+import { Button } from "@/components/ui/button";
 
-import { useToast } from "~/components/ui/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 
 import axios from "axios";
 import { LoaderIcon } from "lucide-react";
 import { useNavigate } from "@remix-run/react";
 import React, { useState } from "react";
-import ErrorMessage from "~/components/shared/error-message";
-import { Modal } from "~/components/shared/modal";
-import useAgentStore from "~/stores/agent-store";
-import { API_BASE_URL } from "~/services/authenticate";
-import { useUserContext } from "~/context/user-provider";
-import { useEnvironmentProvider } from "~/context/environment-provider";
+import ErrorMessage from "@/components/shared/error-message";
+import { Modal } from "@/components/shared/modal";
+import useAgentStore from "@/stores/agent-store";
+import { API_BASE_URL } from "@/services/authenticate";
+import { useUserContext } from "@/context/user-provider";
+import { useEnvironmentProvider } from "@/context/environment-provider";
 
 function UpdateStatusAlert() {
   const user = useUserContext();

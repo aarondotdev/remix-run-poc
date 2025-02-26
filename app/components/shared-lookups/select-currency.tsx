@@ -1,4 +1,4 @@
-import { Button } from "~/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Command,
   CommandEmpty,
@@ -6,25 +6,25 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "~/components/ui/command";
-import { FormControl } from "~/components/ui/form";
+} from "@/components/ui/command";
+import { FormControl } from "@/components/ui/form";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "~/components/ui/popover";
-import { cn } from "~/lib/utils";
+} from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
 import { Check, LoaderIcon } from "lucide-react";
 import React, { FC, useCallback, useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import useSWRInfinite from "swr/infinite";
 import { useDebouncedCallback } from "use-debounce";
-import { Currency } from "~/lib/resource-types";
-import { useUserContext } from "~/context/user-provider";
-import { useEnvironmentProvider } from "~/context/environment-provider";
+import { Currency } from "@/lib/resource-types";
+import { useUserContext } from "@/context/user-provider";
+import { useEnvironmentProvider } from "@/context/environment-provider";
 import { useRevalidator } from "@remix-run/react";
-import { fetchData, getHeaders } from "~/lib/fetch-data";
-import normalizer from "~/lib/json-normalizer";
+import { fetchData, getHeaders } from "@/lib/fetch-data";
+import normalizer from "@/lib/json-normalizer";
 import { CurrencyItem } from "../shared/currency-item";
 import { CaretSortIcon } from "@radix-ui/react-icons";
 import qs from "qs";

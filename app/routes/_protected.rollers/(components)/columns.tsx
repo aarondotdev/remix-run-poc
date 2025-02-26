@@ -5,9 +5,9 @@ import { CellAction } from "./cell-action";
 
 // import IsActiveBadge from "@/components/is-active-badge";
 import { useTranslation } from "react-i18next";
-import { Roller } from "~/lib/resource-types";
-import useRollerStore from "~/stores/roller-store";
-import { useFetchPermissions } from "~/stores/permission-store";
+import { Roller } from "@/lib/resource-types";
+import useRollerStore from "@/stores/roller-store";
+import { useFetchPermissions } from "@/stores/permission-store";
 
 export const columns: ColumnDef<Roller>[] = [
   // {

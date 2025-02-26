@@ -1,22 +1,22 @@
-import { AlertModal } from "~/components/shared/alert-modal";
-import { Button } from "~/components/ui/button";
+import { AlertModal } from "@/components/shared/alert-modal";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from "~/components/ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 import { Edit, MoreHorizontal, Trash } from "lucide-react";
 import { useState } from "react";
 import { Link, useRevalidator } from "@remix-run/react";
-import ErrorMessage from "~/components/shared/error-message";
+import ErrorMessage from "@/components/shared/error-message";
 import axios from "axios";
-import { useToast } from "~/components/ui/use-toast";
-import { Role } from "~/lib/resource-types";
-import { useEnvironmentProvider } from "~/context/environment-provider";
-import useRoleStore from "~/stores/role-store";
-import { useUserContext } from "~/context/user-provider";
+import { useToast } from "@/components/ui/use-toast";
+import { Role } from "@/lib/resource-types";
+import { useEnvironmentProvider } from "@/context/environment-provider";
+import useRoleStore from "@/stores/role-store";
+import { useUserContext } from "@/context/user-provider";
 
 interface CellActionProps {
   data: Role;

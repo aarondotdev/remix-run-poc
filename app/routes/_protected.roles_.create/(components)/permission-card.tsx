@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { Checkbox } from '~/components/ui/checkbox';
-import { Card, CardContent, CardHeader } from '~/components/ui/card';
-import { PermissionsGroup } from '~/lib/resource-types';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { PermissionsGroup } from '@/lib/resource-types';
 import { useTranslation } from 'react-i18next';
 
 interface PermissionAccordionProps {

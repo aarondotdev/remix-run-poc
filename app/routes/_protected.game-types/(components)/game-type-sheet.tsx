@@ -6,13 +6,13 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from "~/components/ui/sheet";
-import { Button } from "~/components/ui/button";
+} from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
 import { Cross2Icon } from "@radix-ui/react-icons";
 
 import CreateGameTypeForm from "./create-game-type-form";
 import UpdateGameTypeForm from "./update-game-type-form";
-import useGameTypeStore from "~/stores/game-type-store";
+import useGameTypeStore from "@/stores/game-type-store";
 
 type SheetContentType = {
   [key: string]: any;

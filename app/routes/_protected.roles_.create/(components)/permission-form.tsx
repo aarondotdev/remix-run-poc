@@ -8,9 +8,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage
-} from '~/components/ui/form';
-import { PermissionsGroup } from '~/lib/resource-types';
-import { getCheckedKeys } from '~/lib/data-helpers';
+} from '@/components/ui/form';
+import { PermissionsGroup } from '@/lib/resource-types';
+import { getCheckedKeys } from '@/lib/data-helpers';
 
 interface IPermissionForm {
   data: PermissionsGroup[];

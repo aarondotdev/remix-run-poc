@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { Button } from "~/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -13,8 +13,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "~/components/ui/form";
-import { Input } from "~/components/ui/input";
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { Fragment, useEffect, useState } from "react";
 import { LoaderIcon } from "lucide-react";
 
@@ -23,15 +23,15 @@ import { useTranslation } from "react-i18next";
 
 // import { Switch } from '@/components/ui/switch';
 import { useRouter } from "next/navigation";
-import { useToast } from "~/components/ui/use-toast";
-import { ScrollArea } from "~/components/ui/scroll-area";
-import useRollerStore from "~/stores/roller-store";
-import { SessionType } from "~/lib/resource-types";
-import ErrorMessage from "~/components/shared/error-message";
+import { useToast } from "@/components/ui/use-toast";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import useRollerStore from "@/stores/roller-store";
+import { SessionType } from "@/lib/resource-types";
+import ErrorMessage from "@/components/shared/error-message";
 import { useLocale } from "remix-i18next/react";
 import { useRevalidator } from "@remix-run/react";
-import { useEnvironmentProvider } from "~/context/environment-provider";
-import { useUserContext } from "~/context/user-provider";
+import { useEnvironmentProvider } from "@/context/environment-provider";
+import { useUserContext } from "@/context/user-provider";
 
 const formSchema = z.object({
   roller_code: z.string(),

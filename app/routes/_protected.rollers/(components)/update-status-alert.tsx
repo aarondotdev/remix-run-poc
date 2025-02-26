@@ -1,16 +1,16 @@
 "use client";
-import { Button } from "~/components/ui/button";
+import { Button } from "@/components/ui/button";
 
-import { useToast } from "~/components/ui/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 
-import useRollertore from "~/stores/roller-store";
+import useRollertore from "@/stores/roller-store";
 import axios from "axios";
 import { LoaderIcon } from "lucide-react";
 import React, { useState } from "react";
-import ErrorMessage from "~/components/shared/error-message";
-import { Modal } from "~/components/shared/modal";
-import { useUserContext } from "~/context/user-provider";
-import { useEnvironmentProvider } from "~/context/environment-provider";
+import ErrorMessage from "@/components/shared/error-message";
+import { Modal } from "@/components/shared/modal";
+import { useUserContext } from "@/context/user-provider";
+import { useEnvironmentProvider } from "@/context/environment-provider";
 import { useRevalidator } from "@remix-run/react";
 
 function UpdateStatusAlert() {

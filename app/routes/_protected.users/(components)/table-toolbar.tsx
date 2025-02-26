@@ -1,12 +1,12 @@
-import { DataTableSearch } from '~/components/ui/data-table/search';
+import { DataTableSearch } from '@/components/ui/data-table/search';
 import { useTableFilter } from './table-filters';
-import { Button } from '~/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
 import UserSheet from './user-sheet';
-import useUserStore from '~/stores/user-store';
+import useUserStore from '@/stores/user-store';
 import { Table } from '@tanstack/react-table';
-import { DataTableViewOptions } from '~/components/ui/data-table/data-table-view-options';
-import { useUserContext } from '~/context/user-provider';
+import { DataTableViewOptions } from '@/components/ui/data-table/data-table-view-options';
+import { useUserContext } from '@/context/user-provider';
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;

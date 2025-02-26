@@ -1,20 +1,20 @@
-import { AlertModal } from "~/components/shared/alert-modal";
-import { Button } from "~/components/ui/button";
+import { AlertModal } from "@/components/shared/alert-modal";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from "~/components/ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 import { MoreHorizontal, SquareUserIcon } from "lucide-react";
 import { useState } from "react";
-import { Guest } from "~/lib/resource-types";
-import { useUserContext } from "~/context/user-provider";
+import { Guest } from "@/lib/resource-types";
+import { useUserContext } from "@/context/user-provider";
 import axios from "axios";
-import useGuestStore from "~/stores/guests-store";
-import { useToast } from "~/components/ui/use-toast";
-import { useEnvironmentProvider } from "~/context/environment-provider";
+import useGuestStore from "@/stores/guests-store";
+import { useToast } from "@/components/ui/use-toast";
+import { useEnvironmentProvider } from "@/context/environment-provider";
 import { useRevalidator } from "@remix-run/react";
 
 interface CellActionProps {

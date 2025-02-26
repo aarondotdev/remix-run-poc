@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { Button } from '~/components/ui/button';
-import { Modal } from '~/components/shared/modal';
+import { Button } from '@/components/ui/button';
+import { Modal } from '@/components/shared/modal';
 import { LoaderIcon } from 'lucide-react';
 
 interface AlertModalProps {

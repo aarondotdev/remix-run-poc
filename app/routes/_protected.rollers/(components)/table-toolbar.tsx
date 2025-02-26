@@ -2,16 +2,16 @@
 import React from "react";
 
 import { useTableFilter } from "./table-filters";
-import { Button, buttonVariants } from "~/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Plus, Router } from "lucide-react";
 
 import { Table } from "@tanstack/react-table";
 import UpdateStatusAlert from "./update-status-alert";
 import AgentSheet from "./roller-sheet";
-import { useFetchPermissions } from "~/stores/permission-store";
-import useRollerStore from "~/stores/roller-store";
-import { DataTableViewOptions } from "~/components/ui/data-table/data-table-view-options";
-import { DataTableSearch } from "~/components/ui/data-table/search";
+import { useFetchPermissions } from "@/stores/permission-store";
+import useRollerStore from "@/stores/roller-store";
+import { DataTableViewOptions } from "@/components/ui/data-table/data-table-view-options";
+import { DataTableSearch } from "@/components/ui/data-table/search";
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;

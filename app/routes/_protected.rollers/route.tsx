@@ -1,14 +1,14 @@
-import normalizer from "~/lib/json-normalizer";
+import normalizer from "@/lib/json-normalizer";
 import { Metadata } from "next";
 import { DataTable } from "./(components)/data-table";
 import { useTranslation } from "react-i18next";
-import PageContainer from "~/components/shared/page-container";
-import { Breadcrumbs } from "~/components/shared/breadcrumbs";
-import { Heading } from "~/components/shared/heading";
-import { getSession } from "~/services/session";
-import { API_BASE_URL, authenticate } from "~/services/authenticate";
-import { serialize } from "~/lib/search-params";
-import { fetchData, getHeaders } from "~/lib/fetch-data";
+import PageContainer from "@/components/shared/page-container";
+import { Breadcrumbs } from "@/components/shared/breadcrumbs";
+import { Heading } from "@/components/shared/heading";
+import { getSession } from "@/services/session";
+import { API_BASE_URL, authenticate } from "@/services/authenticate";
+import { serialize } from "@/lib/search-params";
+import { fetchData, getHeaders } from "@/lib/fetch-data";
 import { useLoaderData } from "@remix-run/react";
 import {
   json,

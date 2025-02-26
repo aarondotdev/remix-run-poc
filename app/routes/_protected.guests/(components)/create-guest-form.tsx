@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "~/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -10,38 +10,38 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "~/components/ui/form";
-import { Input } from "~/components/ui/input";
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { Fragment, useState } from "react";
 import { Check, LoaderIcon } from "lucide-react";
-import { useToast } from "~/components/ui/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 import axios from "axios";
-import ErrorMessage from "~/components/shared/error-message";
-import { ScrollArea } from "~/components/ui/scroll-area";
-import { useUserContext } from "~/context/user-provider";
-import { useLookupFetcher } from "~/lib/lookup-fetcher";
+import ErrorMessage from "@/components/shared/error-message";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { useUserContext } from "@/context/user-provider";
+import { useLookupFetcher } from "@/lib/lookup-fetcher";
 import { useRevalidator } from "@remix-run/react";
-import { useEnvironmentProvider } from "~/context/environment-provider";
-import { Agent, KYCDOcumentType, Membership } from "~/lib/resource-types";
-import { fetchData, getHeaders } from "~/lib/fetch-data";
-import normalizer from "~/lib/json-normalizer";
-import { FileUploader } from "~/components/ui/file-upload";
+import { useEnvironmentProvider } from "@/context/environment-provider";
+import { Agent, KYCDOcumentType, Membership } from "@/lib/resource-types";
+import { fetchData, getHeaders } from "@/lib/fetch-data";
+import normalizer from "@/lib/json-normalizer";
+import { FileUploader } from "@/components/ui/file-upload";
 import useSWR from "swr";
-import Card1 from "~/assets/images/card-01.svg";
-import Card2 from "~/assets/images/card-02.svg";
-import Card3 from "~/assets/images/card-03.svg";
-import Card4 from "~/assets/images/card-04.svg";
+import Card1 from "@/assets/images/card-01.svg";
+import Card2 from "@/assets/images/card-02.svg";
+import Card3 from "@/assets/images/card-03.svg";
+import Card4 from "@/assets/images/card-04.svg";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "~/components/ui/select";
-import { PhoneInput } from "~/components/ui/phone-input";
-import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
-import SelectAgent from "~/components/shared-lookups/select-agent";
-import { cn } from "~/lib/utils";
+} from "@/components/ui/select";
+import { PhoneInput } from "@/components/ui/phone-input";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import SelectAgent from "@/components/shared-lookups/select-agent";
+import { cn } from "@/lib/utils";
 
 const formSchema = z.object({
   internal_ref_code: z.string().min(1, { message: "Required." }),

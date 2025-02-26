@@ -1,10 +1,10 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { CellAction } from "./cell-action";
-import { Guest } from "~/lib/resource-types";
-import { Badge } from "~/components/ui/badge";
+import { Guest } from "@/lib/resource-types";
+import { Badge } from "@/components/ui/badge";
 import { Link } from "@remix-run/react";
-import { cn, displayValueOrDash } from "~/lib/utils";
-import { buttonVariants } from "~/components/ui/button";
+import { cn, displayValueOrDash } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
 
 export const columns: ColumnDef<Guest>[] = [
   {

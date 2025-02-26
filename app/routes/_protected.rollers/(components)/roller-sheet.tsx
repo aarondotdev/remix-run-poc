@@ -6,12 +6,12 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from "~/components/ui/sheet";
-import { Button } from "~/components/ui/button";
+} from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import CreateAgentForm from "./create-roller-form";
 import UpdateAgentForm from "./update-roller-form";
-import useRollerStore from "~/stores/roller-store";
+import useRollerStore from "@/stores/roller-store";
 
 type SheetContentType = {
   [key: string]: any;

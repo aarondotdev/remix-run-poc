@@ -1,4 +1,4 @@
-import { Button } from "~/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -7,16 +7,16 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "~/components/ui/dialog";
-import { API_BASE_URL } from "~/services/authenticate";
-import { useToast } from "~/components/ui/use-toast";
+} from "@/components/ui/dialog";
+import { API_BASE_URL } from "@/services/authenticate";
+import { useToast } from "@/components/ui/use-toast";
 import { LoaderIcon } from "lucide-react";
 import { useState } from "react";
 import axios from "axios";
-import ErrorMessage from "~/components/shared/error-message";
-import useUserStore from "~/stores/user-store";
+import ErrorMessage from "@/components/shared/error-message";
+import useUserStore from "@/stores/user-store";
 import { useRevalidator } from "@remix-run/react";
-import { useUserContext } from "~/context/user-provider";
+import { useUserContext } from "@/context/user-provider";
 
 type DialogContentType = {
   [key: string]: any;

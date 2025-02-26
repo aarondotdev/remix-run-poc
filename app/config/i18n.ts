@@ -1,8 +1,8 @@
 import { serverOnly$ } from "vite-env-only/macros";
 
-import enTranslation from "~/locales/en";
-import jaTranslation from "~/locales/ja";
-import koTranslation from "~/locales/ko";
+import enTranslation from "@/locales/en";
+import jaTranslation from "@/locales/ja";
+import koTranslation from "@/locales/ko";
 
 // This is the list of languages your application supports, the last one is your
 // fallback language

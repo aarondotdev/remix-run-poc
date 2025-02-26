@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "~/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -8,8 +8,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "~/components/ui/dialog";
-import { useToast } from "~/components/ui/use-toast";
+} from "@/components/ui/dialog";
+import { useToast } from "@/components/ui/use-toast";
 import { LoaderIcon } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -21,16 +21,16 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "~/components/ui/form";
+} from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import axios from "axios";
-import useGuestStore from "~/stores/guests-store";
-import { useEnvironmentProvider } from "~/context/environment-provider";
-import ErrorMessage from "~/components/shared/error-message";
-import { Agent } from "~/lib/resource-types";
-import SelectAgent from "~/components/shared-lookups/select-agent";
-import { useUserContext } from "~/context/user-provider";
+import useGuestStore from "@/stores/guests-store";
+import { useEnvironmentProvider } from "@/context/environment-provider";
+import ErrorMessage from "@/components/shared/error-message";
+import { Agent } from "@/lib/resource-types";
+import SelectAgent from "@/components/shared-lookups/select-agent";
+import { useUserContext } from "@/context/user-provider";
 import { useRevalidator } from "@remix-run/react";
 
 type DialogContentType = {

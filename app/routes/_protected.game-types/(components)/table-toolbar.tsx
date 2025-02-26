@@ -2,16 +2,16 @@
 import React from "react";
 
 import { useTableFilter } from "./table-filters";
-import { Button, buttonVariants } from "~/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Plus, Router } from "lucide-react";
 
 import { Table } from "@tanstack/react-table";
 import UpdateStatusAlert from "./update-status-alert";
-import { useFetchPermissions } from "~/stores/permission-store";
+import { useFetchPermissions } from "@/stores/permission-store";
 import GameTypeSheet from "./game-type-sheet";
-import { DataTableSearch } from "~/components/ui/data-table/search";
-import { DataTableViewOptions } from "~/components/ui/data-table/data-table-view-options";
-import useGameTypeStore from "~/stores/game-type-store";
+import { DataTableSearch } from "@/components/ui/data-table/search";
+import { DataTableViewOptions } from "@/components/ui/data-table/data-table-view-options";
+import useGameTypeStore from "@/stores/game-type-store";
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;

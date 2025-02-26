@@ -1,8 +1,8 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { CellAction } from "./cell-action";
-import { DataTableColumnHeader } from "~/components/ui/data-table/data-table-column-header";
-import { Role, Users } from "~/lib/resource-types";
-import { Badge } from "~/components/ui/badge";
+import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header";
+import { Role, Users } from "@/lib/resource-types";
+import { Badge } from "@/components/ui/badge";
 
 export const columns: ColumnDef<Users>[] = [
   {

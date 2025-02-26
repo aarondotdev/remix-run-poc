@@ -4,10 +4,10 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { Fragment, useState } from "react";
 import { z } from "zod";
-import { useToast } from "~/components/ui/use-toast";
-import { useEnvironmentProvider } from "~/context/environment-provider";
-import { useUserContext } from "~/context/user-provider";
-import { Currency } from "~/lib/resource-types";
+import { useToast } from "@/components/ui/use-toast";
+import { useEnvironmentProvider } from "@/context/environment-provider";
+import { useUserContext } from "@/context/user-provider";
+import { Currency } from "@/lib/resource-types";
 import {
   Form,
   FormControl,
@@ -15,12 +15,12 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "~/components/ui/form";
-import { ScrollArea } from "~/components/ui/scroll-area";
-import { Input } from "~/components/ui/input";
+} from "@/components/ui/form";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Input } from "@/components/ui/input";
 
-import { Button } from "~/components/ui/button";
-import SelectCurrency from "~/components/shared-lookups/select-currency";
+import { Button } from "@/components/ui/button";
+import SelectCurrency from "@/components/shared-lookups/select-currency";
 import { LoaderIcon } from "lucide-react";
 
 interface WalletFormProps {

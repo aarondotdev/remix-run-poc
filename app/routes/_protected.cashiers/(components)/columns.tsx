@@ -1,7 +1,7 @@
 "use client";
 import { ColumnDef } from "@tanstack/react-table";
 import { CellAction } from "./cell-action";
-import { Cashier } from "~/lib/resource-types";
+import { Cashier } from "@/lib/resource-types";
 
 export const columns: ColumnDef<Cashier>[] = [
   {

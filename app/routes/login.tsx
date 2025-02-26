@@ -6,13 +6,13 @@ import {
 } from "@remix-run/node";
 import { Form, Link } from "@remix-run/react";
 import { useTheme } from "remix-themes";
-import { Button } from "~/components/ui/button";
-import { cn } from "~/lib/utils";
-import { authenticator } from "~/services/auth";
-import { getSession, commitSession } from "~/services/session";
-import BetrnkLogoLight from "~/assets/logo/betrnk-logo-light@2x.png";
-import BetrnkLogoDark from "~/assets/logo/betrnk-logo-dark@2x.png";
-import BackgroundImage from "~/assets/images/bg.png";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { authenticator } from "@/services/auth";
+import { getSession, commitSession } from "@/services/session";
+import BetrnkLogoLight from "@/assets/logo/betrnk-logo-light@2x.png";
+import BetrnkLogoDark from "@/assets/logo/betrnk-logo-dark@2x.png";
+import BackgroundImage from "@/assets/images/bg.png";
 
 export let loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request.headers.get("Cookie"));

@@ -1,11 +1,11 @@
-import { DataTableSearch } from "~/components/ui/data-table/search";
+import { DataTableSearch } from "@/components/ui/data-table/search";
 import { useTableFilter } from "./table-filters";
 import { Plus } from "lucide-react";
 import { Table } from "@tanstack/react-table";
-import { DataTableViewOptions } from "~/components/ui/data-table/data-table-view-options";
-import { useUserContext } from "~/context/user-provider";
-import { buttonVariants } from "~/components/ui/button";
-import { cn } from "~/lib/utils";
+import { DataTableViewOptions } from "@/components/ui/data-table/data-table-view-options";
+import { useUserContext } from "@/context/user-provider";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { Link } from "@remix-run/react";
 
 interface DataTableToolbarProps<TData> {

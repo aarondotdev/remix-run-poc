@@ -4,11 +4,11 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from "~/components/ui/sheet";
-import { Button } from "~/components/ui/button";
+} from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import CreateCashierForm from "./create-cashier-form";
-import useCashierStore from "~/stores/cashier-store";
+import useCashierStore from "@/stores/cashier-store";
 
 function CashierSheet() {
   type SheetContentType = {

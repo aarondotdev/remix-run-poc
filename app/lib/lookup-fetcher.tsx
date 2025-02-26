@@ -1,5 +1,5 @@
 import { useState, } from 'react';
-import { useUserContext } from '~/context/user-provider';
+import { useUserContext } from '@/context/user-provider';
 import normalizer from './json-normalizer';
 
 interface UseLookupFetcherOptions {

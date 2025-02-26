@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { Users } from "~/lib/resource-types"
+import { Users } from "@/lib/resource-types"
 
 type UserStore = {
   selectedUser: Users | undefined;

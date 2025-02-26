@@ -1,15 +1,15 @@
 import { json, LoaderFunction, MetaFunction } from "@remix-run/node";
-import { Breadcrumbs } from "~/components/shared/breadcrumbs";
-import { Heading } from "~/components/shared/heading";
-import PageContainer from "~/components/shared/page-container";
+import { Breadcrumbs } from "@/components/shared/breadcrumbs";
+import { Heading } from "@/components/shared/heading";
+import PageContainer from "@/components/shared/page-container";
 import {
   normalizeRoleData,
   normalizeRolesWithPermissionsData,
-} from "~/lib/data-helpers";
-import { fetchData, getHeaders } from "~/lib/fetch-data";
-import { PermissionsGroup, Role } from "~/lib/resource-types";
-import { API_BASE_URL, authenticate } from "~/services/authenticate";
-import { getSession } from "~/services/session";
+} from "@/lib/data-helpers";
+import { fetchData, getHeaders } from "@/lib/fetch-data";
+import { PermissionsGroup, Role } from "@/lib/resource-types";
+import { API_BASE_URL, authenticate } from "@/services/authenticate";
+import { getSession } from "@/services/session";
 import UpdatePermissionForm from "./(components)/update-permission-form";
 import { useLoaderData } from "@remix-run/react";
 

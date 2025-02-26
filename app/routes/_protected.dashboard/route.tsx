@@ -1,8 +1,8 @@
 import { json, LoaderFunction, redirect } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import React from 'react'
-import { useUserContext } from '~/context/user-provider';
-import { getSession } from '~/services/session';
+import { useUserContext } from '@/context/user-provider';
+import { getSession } from '@/services/session';
 
 export const loader: LoaderFunction = async ({ request }) => {
     const session = await getSession(request.headers.get("Cookie"));
